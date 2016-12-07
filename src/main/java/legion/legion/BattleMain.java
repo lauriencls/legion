@@ -86,10 +86,17 @@ public class BattleMain {
 					} else {
 						System.out.println("On a récupéré l'identifiant, la partie peut commencer !");
 						
+						String status = "";
+						status = game.getStatus(serverUrl,idPartie);
+						
+						//switch(status) {
+						//case "CANPLAY" :
+							
 						//game.getStatus
 						//traitement de la réponse avec des switch
 						//Si canplay : game.getBoard()
 						//game.play()
+						}
 						
 					}
 					

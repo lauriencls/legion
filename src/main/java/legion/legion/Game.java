@@ -9,6 +9,7 @@ import com.sun.jersey.api.client.WebResource;
 public class Game {
 	
 	String idPartie; //Identifiant de la partie
+	String idEquipePartie; //Identifiant de l'équipe qui joue
 	
 	/**
 	 * @brief Constructeur de Game
@@ -35,13 +36,13 @@ public class Game {
 	/**
 	 * @brief Initialisation d'une partie de type VERSUS
 	 * 		  Donc une partie contre d'autres joueurs
-	 * @param String idEquipe : Identifiant de l'équipe qui souhaite jouer
 	 */
 	public void nextGame(String serverUrl, String idEquipe) {
 		
 		//Récupération de l'id de la partie
 		String request = serverUrl +"/versus/next/"+idEquipe;
 		idPartie = get(request);	
+		idEquipePartie = idEquipe;
 	}
 	
 	/**
@@ -56,6 +57,7 @@ public class Game {
 	 * @param String url : Url auquel on souhaite accéder 
 	 */
 	public static String get(String url){
+
 		
 		String output = "";
 		try {
@@ -87,6 +89,17 @@ public class Game {
 		
 		return(output);
 
+	}
+	
+	/**
+	 * @brief Retourne le statut de la partie 
+	 * 
+	 */
+	public String getStatus(String serverUrl,String idPartie) {
+		
+		//Récupération de l'id de la partie
+		String request = serverUrl +"/game/status/"+idPartie+"/"+idEquipePartie;
+		return(get(request));
 		
 		
 	}
