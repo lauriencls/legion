@@ -27,10 +27,9 @@ public class BattleMain {
 		serverUrl = "";
 		name = "";
 		password = "";
-		format = "";		
+		format = "";	
 		
 		initProperties("properties.txt");
-		
 		
 		if(args.length > 0) {
 			
@@ -48,10 +47,57 @@ public class BattleMain {
 			//Création d'une partie
 			if(args[0].equals("-e")) {
 				
+				System.out.println("Je suis dans le -e");
 				
-				String level = args[1]; //Récupération du niveau de la partie
+				String idPartie = "";
 				
-				Game game = game.init(level);
+				//1. On récupère l'identifiant de l'équipe
+				String idEquipe = getIdEquipe();
+				
+				if(idEquipe !="") {
+					
+					//2. Création d'une partie : 
+					// - versus si on a un nombre en argument 
+					// - practice si on n'a pas d'argument supplémentaire
+					
+					Game game = new Game();
+					
+					if(args.length > 1) {
+						
+						String numberBot = args[1];
+						
+						System.out.println("Lancement d'une nouvelle partie VERSUS");
+						game.newGame(serverUrl,numberBot,idEquipe);
+						
+					} else {
+						
+						System.out.println("Lancement d'une nouvelle partie PRACTICE");
+						game.nextGame(serverUrl,idEquipe);
+								
+					}
+					
+					//Récupération de l'id de la partie après création
+					idPartie = game.getGameId();
+					
+					if(idPartie.equals("NA")) {
+						//@TODO : Donner les raisons
+						System.out.println("La partie n'a pas pu être créée"); 
+
+					} else {
+						System.out.println("On a récupéré l'identifiant, la partie peut commencer !");
+						
+						//game.getStatus
+						//traitement de la réponse avec des switch
+						//Si canplay : game.getBoard()
+						//game.play()
+						
+					}
+					
+				} else {
+					System.out.println("Le système n'a pas pu récupérer le nom de la team");
+				}
+				
+			
 			}
 			
 			
@@ -62,7 +108,7 @@ public class BattleMain {
 		
 	} //Fin du main
 
-	/*
+	/**
 	 * @brief Affiche le contenu du fichier donné en paramètre
 	 * @param String nomFichier : Nom du fichier 
 	 */
@@ -115,57 +161,8 @@ public class BattleMain {
 		}
 	}
 	
-	/*
-	 * @brief Renvoie le nom de l'équipe
-	 */
-	public static String getTeamName() {
-		String TeamName="";
-		try {
-			String nomFichier = "properties.txt";
-			InputStream flux=new FileInputStream(nomFichier); 
-			InputStreamReader lecture=new InputStreamReader(flux);
-			BufferedReader buff=new BufferedReader(lecture);
-			String ligne1 = buff.readLine();
-			String ligne2 = buff.readLine();
-			String ligne3 = buff.readLine();
-			
-			TeamName = ligne2.substring(10);
-			buff.close(); 
-			//return TeamName;
-		}		
-		catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return TeamName;
-	}
-	
-	/*
-	 * @brief Renvoie le mot de passe
-	 */
-	public static String getTeamPwd() {
-		String Pwd="";
-		try {
-			String nomFichier = "properties.txt";
-			InputStream flux=new FileInputStream(nomFichier); 
-			InputStreamReader lecture=new InputStreamReader(flux);
-			BufferedReader buff=new BufferedReader(lecture);
-			String ligne1 = buff.readLine();
-			String ligne2 = buff.readLine();
-			String ligne3 = buff.readLine();
-			
-			Pwd = ligne3.substring(14);
-			buff.close(); 
-			//return TeamName;
-		}		
-		catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return Pwd;
-	}
-	
-	
-	/*
-	 * @brief
+	/**
+	 * @brief Renvoie la réponse de la requête donnée en paramètre
 	 * @param String url : Url auquel on souhaite accéder 
 	 */
 	public static String get(String url){
@@ -188,7 +185,8 @@ public class BattleMain {
 
 			output = response.getEntity(String.class);
 
-			System.out.println("Output from Server .... \n");
+			//Affichage de la réponse
+			//System.out.println("Output from Server .... \n");
 			//System.out.println(output);
 
 		  } catch (Exception e) {
@@ -206,7 +204,6 @@ public class BattleMain {
 	/**
 	 * @brief Envoie une requête de pong vers l'API
 	 */
-
 	public static void getPong() {
 		String request = serverUrl + "/ping";
 		get(request);
@@ -214,45 +211,19 @@ public class BattleMain {
 	}
 	
 	/**
-	 * @brief Création d'une nouvelle partie
+	 * @brief Renvoie l'id de l'équipe pour commencer une partie
 	 * @param String level : Niveau de la partie
 	 */
-	public static void newGame(String level) {
-		
-		//Initialisation des variables locales
-		int tries = 0;
-		boolean ok = false;
-		
-		//Récupération de l'identifiant
-		String nomEquipe = getTeamName();
-		String motDePasse = getTeamPwd();
+	public static String getIdEquipe() {
 		
 		//Récupération de l'identifiant de l'équipe
-		String request = serverUrl +"/player/getIdEquipe/"+nomEquipe+"/"+motDePasse;
+		String request = serverUrl +"/player/getIdEquipe/"+name+"/"+password;
 		String teamId = get(request);
-		System.out.println(teamId);
 		
-		
-		while(tries<3 && !ok) {
-			if(result.equals("NA")) {
-				System.out.println("La partie ne peut pas être créée");
-				tries++;
-			} else { //On a reçu l'identifiant de l'équipe, la partie peut être initialisée
-				ok = true;
-				Game game = Game.init(teamId,level);
-				
-				//Choix du type de la partie
-				
-			}
+		return teamId;
 		}
-		
-		//Demande de création d'une nouvelle partie
 
 		
-		
-		
-	//	 //Initialisation de la partie
-		
-	}
+	
 } //Fin de la classe Battlemain
 
