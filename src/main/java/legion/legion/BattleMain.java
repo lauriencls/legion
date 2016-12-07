@@ -21,7 +21,9 @@ public class BattleMain {
 	private static String password;
 	private static String format;
 	
-	public static void main(String[] args) throws IOException {
+	private static final int pause = 500;
+	
+	public static void main(String[] args) throws IOException, InterruptedException {
 		
 		//Instanciation des variables
 		serverUrl = "";
@@ -89,14 +91,21 @@ public class BattleMain {
 						String status = "";
 						status = game.getStatus(serverUrl,idPartie);
 						
-						//switch(status) {
-						//case "CANPLAY" :
+						
+						while(status.equals("CANTPLAY")) {
 							
-						//game.getStatus
-						//traitement de la réponse avec des switch
-						//Si canplay : game.getBoard()
-						//game.play()
+							System.out.println("Vous ne pouvez pas encore jouer, veuillez patienter ...");
+							Thread.sleep(pause);
+							
+							status = game.getStatus(serverUrl,idPartie);
+							
 						}
+						if(status.equals("CANPLAY")) {
+							
+							//Continuer le jeu
+							
+						}
+
 						
 					}
 					
