@@ -1,4 +1,4 @@
-//Test github Laurie
+//Test github val
 //GREGOIRE
 
 package legion.legion;
