@@ -1,3 +1,5 @@
+//Test github Laurie
+
 package legion.legion;
 
 import java.io.BufferedReader;
@@ -44,6 +46,8 @@ public class BattleMain {
 			
 			//Création d'une partie
 			if(args[0].equals("-e")) {
+				
+				
 				String level = args[1]; //Récupération du niveau de la partie
 				
 				Game game = game.init(level);
