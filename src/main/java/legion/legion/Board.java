@@ -2,13 +2,13 @@ package legion.legion;
 
 public class Board {
 	private EpicHeroesLeague playerBoards;
-	private int nbrTurnLeft;
+	private int nbTurnsLeft;
 	
 	
 	public Board(EpicHeroesLeague playerBoards, int nbrTurnLeft) {
 		super();
 		this.playerBoards = playerBoards;
-		this.nbrTurnLeft = nbrTurnLeft;
+		this.nbTurnsLeft = nbrTurnLeft;
 	}
 
 
@@ -23,12 +23,12 @@ public class Board {
 
 
 	public int getNbrTurnLeft() {
-		return nbrTurnLeft;
+		return nbTurnsLeft;
 	}
 
 
-	public void setNbrTurnLeft(int nbrTurnLeft) {
-		this.nbrTurnLeft = nbrTurnLeft;
+	public void setNbTurnsLeft(int nbTurnsLeft) {
+		this.nbTurnsLeft = nbTurnsLeft;
 	}
 	
 }
