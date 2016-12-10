@@ -11,6 +11,7 @@ public class State {
 		this.remainingDuration = remainingDuration;
 	}
 
+	public State() {}
 
 	public String getType() {
 		return type;
@@ -29,6 +30,13 @@ public class State {
 
 	public void setRemainingDuration(int remainingDuration) {
 		this.remainingDuration = remainingDuration;
+	}
+
+
+	public void update(String type, int remainingDuration) {
+		setType(type);
+		setRemainingDuration(remainingDuration);
+		
 	}
 	
 }

@@ -58,6 +58,7 @@ public class BattleMain {
 				//1. On récupère l'identifiant de l'équipe
 				String idEquipe = getIdEquipe();
 				
+				System.out.println("ID EQUIPE : "+idEquipe);
 				if(idEquipe !="") {
 					
 					//2. Création d'une partie : 
@@ -82,7 +83,7 @@ public class BattleMain {
 					
 					//Récupération de l'id de la partie après création
 					idPartie = game.getGameId();
-					
+					System.out.println("ID PARTIE : "+idPartie);
 					if(idPartie.equals("NA")) {
 						//@TODO : Donner les raisons
 						System.out.println("La partie n'a pas pu être créée"); 
@@ -91,14 +92,22 @@ public class BattleMain {
 						System.out.println("On a récupéré l'identifiant, la partie peut commencer !");
 						
 						String status = "";
-						String board = "";
 						
 						boolean finished = false;
 						
-						while(!finished) {
+						
+						//while(!finished) {
 							
-							status = game.getStatus(serverUrl,idPartie);
+						//Je récupère le statut de la partie
+						status = game.getStatus(serverUrl);
 							
+						//Je l'affiche
+						System.out.println("Statut : "+status);
+							
+						//Je mets à jour le Board (voir méthode en base de Game.java
+						game.updateBoard(serverUrl, format, idPartie);
+							
+							/*
 							switch(status) {
 							
 								case "CANPLAY" : //On peut jouer
@@ -133,6 +142,7 @@ public class BattleMain {
 							}
 							
 						}
+						*/
 						
 						//Fin du jeu
 						

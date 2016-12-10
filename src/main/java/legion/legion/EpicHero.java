@@ -1,7 +1,9 @@
 package legion.legion;
 
-import java.util.Vector;
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class EpicHero {
@@ -17,7 +19,7 @@ public class EpicHero {
 	
 	
 	public EpicHero(String fighterClass, int orderNumberInTeam, boolean isDead, int maxAvalaibleMana,
-			int maxAvalaibleLife, int currentMana, int currentLife, State states, String fighterID) {
+			int maxAvalaibleLife, int currentMana, int currentLife, ArrayList<State> states, String fighterID) {
 		super();
 		this.fighterClass = fighterClass;
 		this.orderNumberInTeam = orderNumberInTeam;
@@ -29,6 +31,8 @@ public class EpicHero {
 		this.states = states;
 		this.fighterID = fighterID;
 	}
+	
+	public EpicHero() {}
 
 
 	public String getFighterClass() {
@@ -56,7 +60,7 @@ public class EpicHero {
 	}
 
 
-	public void setDead(boolean isDead) {
+	public void setIsDead(boolean isDead) {
 		this.isDead = isDead;
 	}
 
@@ -66,17 +70,17 @@ public class EpicHero {
 	}
 
 
-	public void setMaxAvalaibleMana(int maxAvalaibleMana) {
+	public void setMaxAvailableMana(int maxAvalaibleMana) {
 		this.maxAvalaibleMana = maxAvalaibleMana;
 	}
 
 
-	public int getMaxAvalaibleLife() {
+	public int getMaxAvailableLife() {
 		return maxAvalaibleLife;
 	}
 
 
-	public void setMaxAvalaibleLife(int maxAvalaibleLife) {
+	public void setMaxAvailableLife(int maxAvalaibleLife) {
 		this.maxAvalaibleLife = maxAvalaibleLife;
 	}
 
@@ -119,6 +123,39 @@ public class EpicHero {
 	public void setFighterID(String fighterID) {
 		this.fighterID = fighterID;
 	}
+
+
+	public void update(String fighterClass, int orderNumberInTeam, boolean isDead, int maxAvailableMana,
+			int maxAvailableLife, int currentMana, int currentLife, String fighterID, JSONArray statesTable) {
+
+		//Mise à jour des infos avec des set
+		setFighterClass(fighterClass);
+		setOrderNumberInTeam(orderNumberInTeam);
+		setIsDead(isDead);
+		setMaxAvailableMana(maxAvailableMana);
+		setMaxAvailableLife(maxAvailableLife);
+		setCurrentMana(currentMana);
+		setCurrentLife(currentLife);
+		setFighterID(fighterID);
+		
+		//Parcours du JSONArray
+		
+		for (int i=0; i<statesTable.length(); i++) {
+			
+			//Récupération du ième EpicHero
+		    JSONObject item = statesTable.getJSONObject(i);
+		    
+		    //Récupération de ses paramètres
+		    String type = item.getString("type");
+		    int remainingDuration = (int)item.get("remainingDuration");
+		    
+		    states.get(i).update(type,remainingDuration);
+			
+		}
+		
+	}
+
+
 	
 	
 	

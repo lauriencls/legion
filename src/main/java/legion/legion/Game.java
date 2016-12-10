@@ -3,6 +3,7 @@
 package legion.legion;
 
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.sun.jersey.api.client.Client;
@@ -13,6 +14,7 @@ public class Game {
 	
 	String idPartie; //Identifiant de la partie
 	String idEquipePartie; //Identifiant de l'équipe qui joue
+	Board boardPartie; //Tableau de bord de la partie
 	
 	/**
 	 * @brief Constructeur de Game
@@ -33,6 +35,7 @@ public class Game {
 		//Récupération de l'id de la partie
 		String request = serverUrl +"/practice/new/"+numberBot+"/"+idEquipe;
 		idPartie = get(request);	
+		idEquipePartie=idEquipe;
 		
 	}
 	
@@ -97,10 +100,11 @@ public class Game {
 	 * @param String serverUrl : URL de base pour accéder au serveur
 	 * @param String idPartie : Identifiant de la partie
 	 */
-	public String getStatus(String serverUrl,String idPartie) {
+	public String getStatus(String serverUrl) {
 		
 		//Récupération de l'id de la partie
 		String request = serverUrl +"/game/status/"+idPartie+"/"+idEquipePartie;
+		System.out.println(request);
 		return(get(request));
 	}
 	
@@ -110,11 +114,24 @@ public class Game {
 	 * @param String format : Format de retour des données 
 	 * @param String idPartie : Identifiant de la partie
 	 */
-	public String updateBoard(String serverUrl, String format, String idPartie) {
+	public void updateBoard(String serverUrl, String format, String idPartie) {
 		
-		String request = serverUrl +"/game/board/"+idPartie+"/"+format;
-		JSONObject obj = new JSONObject(get(request));
-		return(request);
+		String request = serverUrl +"/game/board/"+idPartie+"?format="+format;
+		System.out.println(request);
+		JSONObject res = new JSONObject(get(request));
+		
+		//Mise à jour de nbTurnsLeft
+		int nbrTurnsLeft = (int) res.get("nbrTurnsLeft");
+		System.out.println("Nombre de tours restants : "+nbrTurnsLeft);	
+		
+		//Récupération des EpicHeroesLeague et MAJ
+		JSONArray playerBoards = res.getJSONArray("playerBoards");
+		
+		//MAJ du board
+		System.out.println("Nombre de EpicHeroesLeague : "+playerBoards.length());
+		boardPartie.update(nbrTurnsLeft,playerBoards); //ICI PROBLEME
+		
+	
 	}
 	 
 }
