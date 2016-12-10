@@ -1,4 +1,4 @@
-//Test github Laurie
+//Test github val
 //GREGOIRE
 
 package legion.legion;
@@ -268,7 +268,6 @@ public class BattleMain {
 		return teamId;
 		}
 
-		
 	
 } //Fin de la classe Battlemain
 

@@ -2,6 +2,7 @@
 
 package legion.legion;
 
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -102,15 +103,15 @@ public class Game {
 	}
 	
 	/**
-	 * @brief Retourne le plateau de jeu de la partie concernée
+	 * @brief Met à jour le plateau de jeu de la partie concernée
 	 * @param String serverUrl : URL de base pour accéder au serveur
 	 * @param String format : Format de retour des données 
 	 * @param String idPartie : Identifiant de la partie
 	 */
-	public String getBoard(String serverUrl, String format, String idPartie) {
+	public String updateBoard(String serverUrl, String format, String idPartie) {
 		
 		String request = serverUrl +"/game/board/"+idPartie+"/"+format;
-		return(get(request));
+		JSONObject obj = new JSONObject(get(request));
 	}
 	 
 }

@@ -28,13 +28,15 @@
     <artifactId>jersey-client</artifactId>
     <version>1.19.3</version>
 </dependency>
-
-<!-- Dépendance JSON -->
+<!-- https://mvnrepository.com/artifact/org.json/json -->
+<!-- https://mvnrepository.com/artifact/org.json/json -->
 <dependency>
     <groupId>org.json</groupId>
     <artifactId>json</artifactId>
-    <version>1.5-20090211</version>
+    <version>20160810</version>
 </dependency>
+
+
     
   </dependencies>
   
