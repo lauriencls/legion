@@ -114,6 +114,7 @@ public class Game {
 		
 		String request = serverUrl +"/game/board/"+idPartie+"/"+format;
 		JSONObject obj = new JSONObject(get(request));
+		return(request);
 	}
 	 
 }

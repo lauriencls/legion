@@ -102,7 +102,7 @@ public class BattleMain {
 							switch(status) {
 							
 								case "CANPLAY" : //On peut jouer
-									board = game.getBoard(serverUrl, format, idPartie);
+									//board = game.getBoard(serverUrl, format, idPartie);
 									break;
 									
 								case "CANTPLAY" : // On ne peut pas encore jouer

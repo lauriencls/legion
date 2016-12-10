@@ -3,10 +3,10 @@ package legion.legion;
 public class EpicHeroesLeague {
 	private String playerID;
 	private String playername;
-	private EpicHero fighters;
+	private EpicHero[] fighters = new EpicHero[2];
 	
 	
-	public EpicHeroesLeague(String playerID, String playername, EpicHero fighters) {
+	public EpicHeroesLeague(String playerID, String playername, EpicHero[] fighters) {
 		super();
 		this.playerID = playerID;
 		this.playername = playername;
@@ -34,12 +34,12 @@ public class EpicHeroesLeague {
 	}
 
 
-	public EpicHero getFighters() {
+	public EpicHero[] getFighters() {
 		return fighters;
 	}
 
 
-	public void setFighters(EpicHero fighters) {
+	public void setFighters(EpicHero[] fighters) {
 		this.fighters = fighters;
 	}
 	
