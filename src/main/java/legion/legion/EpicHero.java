@@ -1,5 +1,9 @@
 package legion.legion;
 
+import java.util.Vector;
+import java.util.ArrayList;
+
+
 public class EpicHero {
 	private String fighterClass;
 	private int orderNumberInTeam;
@@ -8,7 +12,7 @@ public class EpicHero {
 	private int maxAvalaibleLife;
 	private int currentMana;
 	private int currentLife;
-	private State states;
+	private ArrayList<State> states = new ArrayList<State>();
 	private String fighterID;
 	
 	
@@ -97,12 +101,12 @@ public class EpicHero {
 	}
 
 
-	public State getStates() {
+	public ArrayList<State> getStates() {
 		return states;
 	}
 
 
-	public void setStates(State states) {
+	public void setStates(ArrayList<State> states) {
 		this.states = states;
 	}
 

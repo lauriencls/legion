@@ -1,23 +1,23 @@
 package legion.legion;
 
 public class Board {
-	private EpicHeroesLeague playerBoards;
+	private EpicHeroesLeague[] playerBoards = new EpicHeroesLeague[1];
 	private int nbrTurnLeft;
 	
 	
-	public Board(EpicHeroesLeague playerBoards, int nbrTurnLeft) {
+	public Board(EpicHeroesLeague[] playerBoards, int nbrTurnLeft) {
 		super();
 		this.playerBoards = playerBoards;
 		this.nbrTurnLeft = nbrTurnLeft;
 	}
 
 
-	public EpicHeroesLeague getPlayerBoards() {
+	public EpicHeroesLeague[] getPlayerBoards() {
 		return playerBoards;
 	}
 
 
-	public void setPlayerBoards(EpicHeroesLeague playerBoards) {
+	public void setPlayerBoards(EpicHeroesLeague[] playerBoards) {
 		this.playerBoards = playerBoards;
 	}
 
