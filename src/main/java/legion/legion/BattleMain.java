@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
+
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource; 
@@ -89,23 +91,50 @@ public class BattleMain {
 						System.out.println("On a récupéré l'identifiant, la partie peut commencer !");
 						
 						String status = "";
-						status = game.getStatus(serverUrl,idPartie);
+						String board = "";
 						
+						boolean finished = false;
 						
-						while(status.equals("CANTPLAY")) {
-							
-							System.out.println("Vous ne pouvez pas encore jouer, veuillez patienter ...");
-							Thread.sleep(pause);
+						while(!finished) {
 							
 							status = game.getStatus(serverUrl,idPartie);
 							
-						}
-						if(status.equals("CANPLAY")) {
+							switch(status) {
 							
-							//Continuer le jeu
+								case "CANPLAY" : //On peut jouer
+									board = game.getBoard(serverUrl, format, idPartie);
+									break;
+									
+								case "CANTPLAY" : // On ne peut pas encore jouer
+									
+									System.out.println("Vous ne pouvez pas encore jouer, veuillez patienter ...");
+									Thread.sleep(pause);
+									System.out.println("CANPLAY");
+									break;
+									
+								case "VICTORY" : // On a gagné la partie
+									System.out.println("VICTORY");
+									break;
+									
+									
+								case "DEFEAT" : //On a perdu la partie
+									System.out.println("DEFEAT");
+									break;
+									
+								case "DRAW" : //Match nul
+									System.out.println("DRAW");
+									break;
+									
+								case "CANCELLED" : //Abandon
+									finished = true;
+									System.out.println("CANCELLED");
+									break;
+								
+							}
 							
 						}
-
+						
+						//Fin du jeu
 						
 					}
 					

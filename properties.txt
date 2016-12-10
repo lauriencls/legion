@@ -1,3 +1,4 @@
 rest.base.url=http://codeandplay.date/epic-ws/epic
 team.name=Legion
 team.password=Aucune_inspiration7
+format=JSON

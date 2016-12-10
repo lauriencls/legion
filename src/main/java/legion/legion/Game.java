@@ -82,9 +82,7 @@ public class Game {
 			//System.out.println(output);
 
 		  } catch (Exception e) {
-
 			e.printStackTrace();
-
 		  }
 		
 		return(output);
@@ -93,14 +91,26 @@ public class Game {
 	
 	/**
 	 * @brief Retourne le statut de la partie 
-	 * 
+	 * @param String serverUrl : URL de base pour accéder au serveur
+	 * @param String idPartie : Identifiant de la partie
 	 */
 	public String getStatus(String serverUrl,String idPartie) {
 		
 		//Récupération de l'id de la partie
 		String request = serverUrl +"/game/status/"+idPartie+"/"+idEquipePartie;
 		return(get(request));
-		
-		
 	}
+	
+	/**
+	 * @brief Retourne le plateau de jeu de la partie concernée
+	 * @param String serverUrl : URL de base pour accéder au serveur
+	 * @param String format : Format de retour des données 
+	 * @param String idPartie : Identifiant de la partie
+	 */
+	public String getBoard(String serverUrl, String format, String idPartie) {
+		
+		String request = serverUrl +"/game/board/"+idPartie+"/"+format;
+		return(get(request));
+	}
+	 
 }
