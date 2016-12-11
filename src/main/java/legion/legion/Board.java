@@ -63,9 +63,10 @@ public class Board {
 		    System.out.println("PlayerID : "+playerId);
 		    String playerName = item.getString("playerName");
 		    System.out.println("playerName : "+playerName);
-
+		    
+		    
 		    //Récupération de la liste des fighters dans un tableau
-			JSONArray fighters = item.getJSONArray("fighters");	
+			EpicHero fighters = item.get("fighters");	
 			
 			//playerBoards[i].update(playerId, playerName, fighters);
 			
