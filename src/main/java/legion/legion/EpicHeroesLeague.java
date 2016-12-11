@@ -49,7 +49,7 @@ public class EpicHeroesLeague {
 	}
 
 
-	public void update(String playerId, String playerName, JSONArray epicHero) {
+	public void update(String playerId, String playerName, JSONObject epicHero) {
 		
 		//MAJ du playerId et du playerName
 		setPlayerID(playerId);
@@ -59,7 +59,7 @@ public class EpicHeroesLeague {
 		for (int i=0; i<epicHero.length(); i++) {
 			
 			//Récupération du ième EpicHero
-		    JSONObject item = epicHero.getJSONObject(i);
+		    JSONObject item = epicHero.get(i);
 		    
 		    //Récupération de ses paramètres
 		    String fighterClass = item.getString("fighterClass");
@@ -72,7 +72,7 @@ public class EpicHeroesLeague {
 		    String fighterID = item.getString("fighterID");
 		    
 		    //Récupération des state
-		    JSONArray states = item.getJSONArray("states");
+		    JSONObject states = item.getJSONObject("states");
 		    
 		    fighters[i].update(fighterClass,orderNumberInTeam,isDead,maxAvailableMana,
 		    		maxAvailableLife,currentMana,currentLife,fighterID,states);

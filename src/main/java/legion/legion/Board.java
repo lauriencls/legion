@@ -18,7 +18,9 @@ public class Board {
 	}
 
 
-	public Board() {}
+	public Board() {
+		nbrTurnsLeft=0;
+	}
 
 
 	public EpicHeroesLeague[] getPlayerBoards() {
@@ -41,11 +43,14 @@ public class Board {
 	}
 
 
-	public void update(int nbrTurnsLeft,JSONArray epicHeroes) {
+	public void update(int nbrTurnsLeftParam,JSONArray epicHeroes) {
 		
 		System.out.println("Début de update"); //N'affiche pas ce message donc ne rentre pas dans la méthode
+		System.out.println("nbrtunrns " + nbrTurnsLeftParam);
+		System.out.println("taille de epicHeres : " +epicHeroes.length());			
 		//MAJ du nbrTurnsLeft
-		setNbrTurnsLeft(nbrTurnsLeft);
+		
+		setNbrTurnsLeft(nbrTurnsLeftParam);
 		
 		//Mise à jour du tableau playerBoards
 		for (int i=0; i<epicHeroes.length(); i++) {
@@ -59,9 +64,15 @@ public class Board {
 		    String playerName = item.getString("playerName");
 		    System.out.println("playerName : "+playerName);
 
-			JSONArray fighters = item.getJSONArray("fighters");
+		    //Récupération de la liste des fighters dans un tableau
+			JSONArray fighters = item.getJSONArray("fighters");	
 			
-		    playerBoards[i].update(playerId, playerName, fighters);
+			//playerBoards[i].update(playerId, playerName, fighters);
+			
+			//System.out.println("Tableau vide");
+			
+			
+		    
 		    
 		}
 		

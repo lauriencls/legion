@@ -20,7 +20,7 @@ public class Game {
 	 * @brief Constructeur de Game
 	 */
 	public Game() {
-		idPartie = "";
+		boardPartie = new Board();
 	}
 	
 	/**
@@ -116,20 +116,24 @@ public class Game {
 	 */
 	public void updateBoard(String serverUrl, String format, String idPartie) {
 		
+		System.out.println("----- Mise à jour du tableau de bord -----");
 		String request = serverUrl +"/game/board/"+idPartie+"?format="+format;
 		System.out.println(request);
 		JSONObject res = new JSONObject(get(request));
 		
-		//Mise à jour de nbTurnsLeft
-		int nbrTurnsLeft = (int) res.get("nbrTurnsLeft");
-		System.out.println("Nombre de tours restants : "+nbrTurnsLeft);	
+		//nbTurnsLeft : Numeric
+		int nbTurnsLeft = res.getInt("nbrTurnsLeft");
+		System.out.println("nombre de tours : "+nbTurnsLeft);
 		
-		//Récupération des EpicHeroesLeague et MAJ
-		JSONArray playerBoards = res.getJSONArray("playerBoards");
+		//playerBoards : EpicHeroesLeague
+		EpicHeroesLeague[] playerBoards = res.getJSONObject("playerBoards");
 		
 		//MAJ du board
 		System.out.println("Nombre de EpicHeroesLeague : "+playerBoards.length());
-		boardPartie.update(nbrTurnsLeft,playerBoards); //ICI PROBLEME
+		
+		boardPartie.update(nbTurnsLeft,playerBoards);
+		
+
 		
 	
 	}

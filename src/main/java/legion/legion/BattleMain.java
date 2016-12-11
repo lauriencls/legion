@@ -35,6 +35,8 @@ public class BattleMain {
 		
 		initProperties("properties.txt");
 		
+		
+		//Analyse des arguments		
 		if(args.length > 0) {
 			
 			//Affichage de "pong" (-p dans le terminal)
@@ -57,8 +59,8 @@ public class BattleMain {
 				
 				//1. On récupère l'identifiant de l'équipe
 				String idEquipe = getIdEquipe();
-				
 				System.out.println("ID EQUIPE : "+idEquipe);
+				
 				if(idEquipe !="") {
 					
 					//2. Création d'une partie : 
@@ -85,7 +87,6 @@ public class BattleMain {
 					idPartie = game.getGameId();
 					System.out.println("ID PARTIE : "+idPartie);
 					if(idPartie.equals("NA")) {
-						//@TODO : Donner les raisons
 						System.out.println("La partie n'a pas pu être créée"); 
 
 					} else {
@@ -100,10 +101,9 @@ public class BattleMain {
 							
 						//Je récupère le statut de la partie
 						status = game.getStatus(serverUrl);
+						System.out.println("Statut de la partie : "+status);
 							
-						//Je l'affiche
-						System.out.println("Statut : "+status);
-							
+						
 						//Je mets à jour le Board (voir méthode en base de Game.java
 						game.updateBoard(serverUrl, format, idPartie);
 							
