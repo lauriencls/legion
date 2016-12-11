@@ -126,7 +126,7 @@ public class Game {
 		System.out.println("nombre de tours : "+nbTurnsLeft);
 		
 		//playerBoards : EpicHeroesLeague
-		EpicHeroesLeague[] playerBoards = res.getJSONObject("playerBoards");
+		JSONArray playerBoards = res.getJSONArray("playerBoards");
 		
 		//MAJ du board
 		System.out.println("Nombre de EpicHeroesLeague : "+playerBoards.length());
