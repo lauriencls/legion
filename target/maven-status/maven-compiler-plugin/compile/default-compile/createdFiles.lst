@@ -1,6 +1,9 @@
-legion\legion\Converter.class
 legion\legion\Converter$1.class
 legion\legion\EpicHeroesLeague.class
 legion\legion\State.class
-legion\legion\EpicHero.class
+legion\legion\ApiCaller.class
 legion\legion\Board.class
+legion\legion\Game.class
+legion\legion\Converter.class
+legion\legion\EpicHero.class
+legion\legion\BattleMain.class

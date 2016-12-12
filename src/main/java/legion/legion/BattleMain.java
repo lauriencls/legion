@@ -1,7 +1,5 @@
 package legion.legion;
 
-import legion.legion.*;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -111,6 +109,8 @@ public class BattleMain {
 							
 								case "CANPLAY" : //On peut jouer
 									Board board = converter.convert(api.getBoard(idPartie));
+									//Le board est récupéré, il faut maintenant élaborer l'équipe et la stratégie
+									
 									
 									break;
 									
