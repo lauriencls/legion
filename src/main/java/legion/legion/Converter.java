@@ -14,17 +14,18 @@ public class Converter {
 
 	private String JSONContent;
 	private JsonObject JSONObj;
+	private String teamName;
 
-	public Converter() {
+	public Converter(String teamName) {
 
-		JSONContent = "";
+		this.JSONContent = "";
+		this.teamName = teamName;
 
 	}
 
-	public Board convert(String jsonContent) {
-		
-		//Création d'un nouveau tableau de bord
-		Board boardPartie = new Board();
+public Board convert(String jsonContent) {
+
+		Board board = new Board();
 		Gson gson = new GsonBuilder().create();
 
 		Type listType = new TypeToken<ArrayList<EpicHeroesLeague>>() {
@@ -35,23 +36,23 @@ public class Converter {
 		
 		System.out.println("\n\n\n\nGetBoard JSON :" + jsonObject.get("playerBoards"));
 		
-		List<EpicHeroesLeague> yourClassList = new Gson().fromJson(jsonObject.get("playerBoards"), listType);
+		List<EpicHeroesLeague> EpicHeroesLeagues = new Gson().fromJson(jsonObject.get("playerBoards"), listType);
 
-		System.out.println(yourClassList.size());
+		System.out.println(EpicHeroesLeagues.size());
 
-		for (EpicHeroesLeague e : yourClassList) {
-			if (e.getPlayerName().equals("Miagic Bot")) {
-				b.setMiagicBot(e);
+		for (EpicHeroesLeague e : EpicHeroesLeagues) {
+			if (e.getPlayerName().equals(this.teamName)) {
+				//board.setMiagicBot(e);
 			} else {
-				b.setAdversaire(e);
+				//board.setAdversaire(e);
 			}
 		}
 
-		b.setNbTurnsLeft(Integer.parseInt(jsonObject.get("nbrTurnsLeft").toString()));
+		board.setNbrTurnsLeft(Integer.parseInt(jsonObject.get("nbrTurnsLeft").toString()));
 
-		System.out.println(b);
+		System.out.println(board);
 
-		return b;
+		return board;
 
 	}
 

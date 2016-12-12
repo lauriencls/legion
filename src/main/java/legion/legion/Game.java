@@ -20,11 +20,35 @@ public class Game {
 	/**
 	 * @brief Constructeur de Game
 	 */
-	public Game(String url, String format) {
+	public Game(ApiCaller apiCaller) {
 		boardPartie = new Board();
-		apiCaller = new ApiCaller(url, format);
+		this.apiCaller = apiCaller;
 	}
 	
+	public String getIdPartie() {
+		return idPartie;
+	}
+
+	public void setIdPartie(String idPartie) {
+		this.idPartie = idPartie;
+	}
+
+	public String getIdEquipePartie() {
+		return idEquipePartie;
+	}
+
+	public void setIdEquipePartie(String idEquipePartie) {
+		this.idEquipePartie = idEquipePartie;
+	}
+
+	public Board getBoardPartie() {
+		return boardPartie;
+	}
+
+	public void setBoardPartie(Board boardPartie) {
+		this.boardPartie = boardPartie;
+	}
+
 	/**
 	 * @brief Initialisation d'une partie de type PRACTICE
 	 * 		  Donc une partie contre des bots
@@ -33,7 +57,7 @@ public class Game {
 	 */
 	public void newGame(String numberBot, String idEquipe) {
 		
-		idEquipePartie = apiCaller.newGame(numberBot,idEquipe);;
+		idEquipePartie = this.apiCaller.newGame(numberBot,idEquipe);;
 		
 	}
 	
@@ -44,7 +68,7 @@ public class Game {
 	public void nextGame(String idEquipe) {
 		
 		//Récupération de l'id de la partie
-		idEquipePartie = apiCaller.nextGame(idEquipe);
+		idEquipePartie = this.apiCaller.nextGame(idEquipe);
 	}
 	
 

@@ -39,9 +39,11 @@ public class BattleMain {
 		//Analyse des arguments		
 		if(args.length > 0) {
 			
+			ApiCaller api = new ApiCaller(serverUrl, format);
+			
 			//Affichage de "pong" (-p dans le terminal)
 			if(args[0].equals("-p")) {
-				getPong();
+				api.getPong();
 			}	
 			
 			//Affichage du fichier properties (-config dans le terminal)
@@ -50,68 +52,67 @@ public class BattleMain {
 				afficheProperties(nomFichier);
 			}
 			
-			//Création d'une partie
+			//CrÃ©ation d'une partie
 			if(args[0].equals("-e")) {
 				
 				System.out.println("Je suis dans le -e");
 				
 				String idPartie = "";
 				
-				//1. On récupère l'identifiant de l'équipe
-				String idEquipe = getIdEquipe();
+				//1. On rÃ©cupÃ¨re l'identifiant de l'Ã©quipe
+				String idEquipe = api.getIdEquipe(name, password);
 				System.out.println("ID EQUIPE : "+idEquipe);
 				
 				if(idEquipe !="") {
 					
-					//2. Création d'une partie : 
+					//2. CrÃ©ation d'une partie : 
 					// - versus si on a un nombre en argument 
-					// - practice si on n'a pas d'argument supplémentaire
+					// - practice si on n'a pas d'argument supplÃ©mentaire
 					
-					Game game = new Game();
+					Game game = new Game(api);
 					
 					if(args.length > 1) {
 						
 						String numberBot = args[1];
 						
 						System.out.println("Lancement d'une nouvelle partie VERSUS");
-						game.newGame(serverUrl,numberBot,idEquipe);
+						game.newGame(numberBot, idEquipe);
 						
 					} else {
 						
 						System.out.println("Lancement d'une nouvelle partie PRACTICE");
-						game.nextGame(serverUrl,idEquipe);
+						game.nextGame(idEquipe);
 								
 					}
 					
-					//Récupération de l'id de la partie après création
-					idPartie = game.getGameId();
+					//RÃ©cupÃ©ration de l'id de la partie aprÃ¨s crÃ©ation
+					idPartie = game.getIdPartie();
 					System.out.println("ID PARTIE : "+idPartie);
 					if(idPartie.equals("NA")) {
-						System.out.println("La partie n'a pas pu être créée"); 
+						System.out.println("La partie n'a pas pu Ãªtre crÃ©Ã©e"); 
 
 					} else {
-						System.out.println("On a récupéré l'identifiant, la partie peut commencer !");
+						System.out.println("On a rÃ©cupÃ©rÃ© l'identifiant, la partie peut commencer !");
 						
 						String status = "";
 						
 						boolean finished = false;
+						Converter converter = new Converter(name);
+						Board board;
 						
-						
-						//while(!finished) {
+						while(!finished) {
 							
-						//Je récupère le statut de la partie
-						status = game.getStatus(serverUrl);
+						//Je rÃ©cupÃ¨re le statut de la partie
+						status = api.getStatus(idPartie, idEquipe);
 						System.out.println("Statut de la partie : "+status);
 							
 						
-						//Je mets à jour le Board (voir méthode en base de Game.java
-						game.updateBoard(serverUrl, format, idPartie);
+						//Je mets Ã  jour le Board (voir mÃ©thode en base de Game.java							
 							
-							/*
 							switch(status) {
 							
 								case "CANPLAY" : //On peut jouer
-									//board = game.getBoard(serverUrl, format, idPartie);
+									board = converter.convert(api.getBoard(idPartie));
 									break;
 									
 								case "CANTPLAY" : // On ne peut pas encore jouer
@@ -121,7 +122,7 @@ public class BattleMain {
 									System.out.println("CANPLAY");
 									break;
 									
-								case "VICTORY" : // On a gagné la partie
+								case "VICTORY" : // On a gagnÃ© la partie
 									System.out.println("VICTORY");
 									break;
 									
@@ -142,29 +143,24 @@ public class BattleMain {
 							}
 							
 						}
-						*/
+						
 						
 						//Fin du jeu
 						
 					}
 					
 				} else {
-					System.out.println("Le système n'a pas pu récupérer le nom de la team");
+					System.out.println("Le systÃ¨me n'a pas pu rÃ©cupÃ©rer le nom de la team");
 				}
-				
 			
 			}
-			
-			
-		}
 		
-		
-
-		
-	} //Fin du main
+	} 
+	
+}//Fin du main
 
 	/**
-	 * @brief Affiche le contenu du fichier donné en paramètre
+	 * @brief Affiche le contenu du fichier donnÃ© en paramÃ¨tre
 	 * @param String nomFichier : Nom du fichier 
 	 */
 	public static void afficheProperties(String nomFichier) {
@@ -188,7 +184,7 @@ public class BattleMain {
 	} //Fin de la fonction afficheProperties
 	
 	/**
-	 * @brief Récupère les propriétés
+	 * @brief RÃ©cupÃ¨re les propriÃ©tÃ©s
 	 * @param file
 	 */
 	public static void initProperties(String file) {
