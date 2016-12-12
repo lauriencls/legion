@@ -66,7 +66,7 @@ public class Board {
 		    
 		    
 		    //Récupération de la liste des fighters dans un tableau
-			EpicHero fighters = item.get("fighters");	
+			//EpicHero fighters = item.get("fighters");	
 			
 			//playerBoards[i].update(playerId, playerName, fighters);
 			

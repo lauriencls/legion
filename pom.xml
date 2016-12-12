@@ -36,7 +36,7 @@
     <version>20160810</version>
 </dependency>
 
-<dependencies>
+
     <!--  Gson: Java to Json conversion -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
@@ -44,7 +44,7 @@
       <version>2.8.0</version>
       <scope>compile</scope>
     </dependency>
-</dependencies>
+
 
     
   </dependencies>

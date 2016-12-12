@@ -216,67 +216,10 @@ public class BattleMain {
 		}
 	}
 	
-	/**
-	 * @brief Renvoie la réponse de la requête donnée en paramètre
-	 * @param String url : Url auquel on souhaite accéder 
-	 */
-	public static String get(String url){
-		
-		String output = "";
-		try {
-
-			Client client = Client.create();
-
-			WebResource webResource = client
-			   .resource(url);
-
-			ClientResponse response = webResource.accept("application/json")
-	                   .get(ClientResponse.class);
-
-			if (response.getStatus() != 200) {
-			   throw new RuntimeException("Failed : HTTP error code : "
-				+ response.getStatus());
-			}
-
-			output = response.getEntity(String.class);
-
-			//Affichage de la réponse
-			//System.out.println("Output from Server .... \n");
-			//System.out.println(output);
-
-		  } catch (Exception e) {
-
-			e.printStackTrace();
-
-		  }
-		
-		return(output);
-
-		
-		
-	}
 	
-	/**
-	 * @brief Envoie une requête de pong vers l'API
-	 */
-	public static void getPong() {
-		String request = serverUrl + "/ping";
-		get(request);
-		//get("http://codeandplay.date/epic-ws/epic/ping");
-	}
+
 	
-	/**
-	 * @brief Renvoie l'id de l'équipe pour commencer une partie
-	 * @param String level : Niveau de la partie
-	 */
-	public static String getIdEquipe() {
-		
-		//Récupération de l'identifiant de l'équipe
-		String request = serverUrl +"/player/getIdEquipe/"+name+"/"+password;
-		String teamId = get(request);
-		
-		return teamId;
-		}
+
 
 	
 } //Fin de la classe Battlemain
