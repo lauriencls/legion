@@ -1,19 +1,23 @@
 package legion.legion;
 
+
+
+import java.util.*;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class EpicHeroesLeague {
 	private String playerID;
 	private String playerName;
-	private EpicHero[] fighters = new EpicHero[2];
+	private List<EpicHero> epicHeroes;
 	
 	
-	public EpicHeroesLeague(String playerID, String playername, EpicHero[] fighters) {
+	public EpicHeroesLeague(String playerID, String playername) {
 		super();
 		this.playerID = playerID;
 		this.playerName = playername;
-		this.fighters = fighters;
+		this.epicHeroes = new ArrayList<EpicHero>();
 	}
 	
 	public EpicHeroesLeague() {}
@@ -39,13 +43,13 @@ public class EpicHeroesLeague {
 	}
 
 
-	public EpicHero[] getFighters() {
-		return fighters;
+	public List<EpicHero> gerEpicHeroes() {
+		return this.epicHeroes;
 	}
 
 
-	public void setFighters(EpicHero[] fighters) {
-		this.fighters = fighters;
+	public void setFighters(List<EpicHero> epicHeroes) {
+		this.epicHeroes = epicHeroes;
 	}
 		
 	

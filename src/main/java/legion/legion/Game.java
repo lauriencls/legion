@@ -70,35 +70,5 @@ public class Game {
 		//Récupération de l'id de la partie
 		idEquipePartie = this.apiCaller.nextGame(idEquipe);
 	}
-	
-
-	
-	/**
-	 * @brief Met à jour le plateau de jeu de la partie concernée
-	 * @param String serverUrl : URL de base pour accéder au serveur
-	 * @param String format : Format de retour des données 
-	 * @param String idPartie : Identifiant de la partie
-	 */
-	public void updateBoard(String idPartie) {
-		
-		System.out.println("----- Mise à jour du tableau de bord -----");
-		JSONObject res = new JSONObject(apiCaller.getBoard(idPartie));
-		
-		//nbTurnsLeft : Numeric
-		int nbTurnsLeft = res.getInt("nbrTurnsLeft");
-		System.out.println("nombre de tours : "+nbTurnsLeft);
-		
-		//playerBoards : EpicHeroesLeague
-		JSONArray playerBoards = res.getJSONArray("playerBoards");
-		
-		//MAJ du board
-		System.out.println("Nombre de EpicHeroesLeague : "+playerBoards.length());
-		
-		boardPartie.update(nbTurnsLeft,playerBoards);
-		
-
-		
-	
-	}
 	 
 }
