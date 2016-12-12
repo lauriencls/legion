@@ -1,3 +1,0 @@
-rest.base.url=http://codeandplay.dateepic-ws/epic
-team.name=test
-team.password=test

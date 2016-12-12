@@ -1,7 +1,5 @@
 package legion.legion;
 
-
-
 import java.util.*;
 
 import org.json.JSONArray;
@@ -10,7 +8,7 @@ import org.json.JSONObject;
 public class EpicHeroesLeague {
 	private String playerID;
 	private String playerName;
-	private List<EpicHero> epicHeroes;
+	private ArrayList<EpicHero> epicHeroes;
 	
 	
 	public EpicHeroesLeague(String playerID, String playername) {
@@ -48,7 +46,7 @@ public class EpicHeroesLeague {
 	}
 
 
-	public void setFighters(List<EpicHero> epicHeroes) {
+	public void setFighters(ArrayList<EpicHero> epicHeroes) {
 		this.epicHeroes = epicHeroes;
 	}
 		

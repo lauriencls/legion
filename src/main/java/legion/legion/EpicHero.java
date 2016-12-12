@@ -106,7 +106,7 @@ public class EpicHero {
 
 
 	public ArrayList<State> getStates() {
-		return states;
+		return this.states;
 	}
 
 
@@ -147,9 +147,9 @@ public class EpicHero {
 		    
 		    //Récupération de ses paramètres
 		    String type = item.getString("type");
-		    int remainingDuration = (int)item.get("remainingDuration");
+		    //int remainingDuration = (int)item.get("remainingDuration");
 		    
-		    states.get(i).update(type,remainingDuration);
+		    //states.get(i).update(type,remainingDuration);
 			
 		}
 		

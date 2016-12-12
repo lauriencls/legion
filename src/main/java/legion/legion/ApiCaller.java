@@ -109,7 +109,7 @@ public class ApiCaller {
 	}
 	
 	public String getBoard(String idPartie) {
-		String request = url + "/game/board"+idPartie+"?format="+format;
+		String request = url + "/game/board/"+idPartie+"?format="+format;
 		return(get(request));
 	}
 }

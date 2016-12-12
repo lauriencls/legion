@@ -6,14 +6,16 @@ import org.json.JSONObject;
 public class Board {
 
 
-	private EpicHeroesLeague[] playerBoards;
+	private EpicHeroesLeague ourTeam;
+	private EpicHeroesLeague ennemieTeam;
 	private int nbrTurnsLeft;
 
 	
 	
-	public Board(EpicHeroesLeague[] playerBoards, int nbrTurnLeft) {
+	public Board(EpicHeroesLeague ourTeam, EpicHeroesLeague ennemieTeam, int nbrTurnLeft) {
 		super();
-		this.playerBoards = playerBoards;
+		this.ourTeam = ourTeam;
+		this.ennemieTeam = ennemieTeam;
 		this.nbrTurnsLeft = nbrTurnLeft;
 	}
 
@@ -22,14 +24,23 @@ public class Board {
 		nbrTurnsLeft=0;
 	}
 
-
-	public EpicHeroesLeague[] getPlayerBoards() {
-		return playerBoards;
+	public EpicHeroesLeague getOurTeam() {
+		return ourTeam;
 	}
 
 
-	public void setPlayerBoards(EpicHeroesLeague[] playerBoards) {
-		this.playerBoards = playerBoards;
+	public void setOurTeam(EpicHeroesLeague ourTeam) {
+		this.ourTeam = ourTeam;
+	}
+
+
+	public EpicHeroesLeague getEnnemieTeam() {
+		return ennemieTeam;
+	}
+
+
+	public void setEnnemieTeam(EpicHeroesLeague ennemieTeam) {
+		this.ennemieTeam = ennemieTeam;
 	}
 
 

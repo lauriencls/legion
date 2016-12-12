@@ -1,20 +1,13 @@
-//Test github val
-//GREGOIRE
-
 package legion.legion;
+
+import legion.legion.*;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Properties;
-
-
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource; 
+import java.util.Properties; 
 
 public class BattleMain {
 
@@ -34,7 +27,6 @@ public class BattleMain {
 		format = "";	
 		
 		initProperties("properties.txt");
-		
 		
 		//Analyse des arguments		
 		if(args.length > 0) {
@@ -63,17 +55,21 @@ public class BattleMain {
 				String idEquipe = api.getIdEquipe(name, password);
 				System.out.println("ID EQUIPE : "+idEquipe);
 				
+				Game game = new Game(api);
+				game.setIdEquipePartie(idEquipe);
+				
 				if(idEquipe !="") {
 					
 					//2. CrÃ©ation d'une partie : 
 					// - versus si on a un nombre en argument 
 					// - practice si on n'a pas d'argument supplÃ©mentaire
 					
-					Game game = new Game(api);
+					
 					
 					if(args.length > 1) {
 						
 						String numberBot = args[1];
+						
 						
 						System.out.println("Lancement d'une nouvelle partie VERSUS");
 						game.newGame(numberBot, idEquipe);
@@ -88,7 +84,10 @@ public class BattleMain {
 					//RÃ©cupÃ©ration de l'id de la partie aprÃ¨s crÃ©ation
 					idPartie = game.getIdPartie();
 					System.out.println("ID PARTIE : "+idPartie);
-					if(idPartie.equals("NA")) {
+					
+					
+					
+					if(idPartie.equals("null")) {
 						System.out.println("La partie n'a pas pu Ãªtre crÃ©Ã©e"); 
 
 					} else {
@@ -98,7 +97,6 @@ public class BattleMain {
 						
 						boolean finished = false;
 						Converter converter = new Converter(name);
-						Board board;
 						
 						while(!finished) {
 							
@@ -112,14 +110,15 @@ public class BattleMain {
 							switch(status) {
 							
 								case "CANPLAY" : //On peut jouer
-									board = converter.convert(api.getBoard(idPartie));
+									Board board = converter.convert(api.getBoard(idPartie));
+									
 									break;
 									
 								case "CANTPLAY" : // On ne peut pas encore jouer
 									
 									System.out.println("Vous ne pouvez pas encore jouer, veuillez patienter ...");
 									Thread.sleep(pause);
-									System.out.println("CANPLAY");
+									System.out.println("CANTPLAY");
 									break;
 									
 								case "VICTORY" : // On a gagnÃ© la partie

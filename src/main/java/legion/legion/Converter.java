@@ -42,9 +42,9 @@ public Board convert(String jsonContent) {
 
 		for (EpicHeroesLeague e : EpicHeroesLeagues) {
 			if (e.getPlayerName().equals(this.teamName)) {
-				//board.setMiagicBot(e);
+				board.setOurTeam(e);
 			} else {
-				//board.setAdversaire(e);
+				board.setEnnemieTeam(e);
 			}
 		}
 

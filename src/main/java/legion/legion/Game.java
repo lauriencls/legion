@@ -55,9 +55,10 @@ public class Game {
 	 * @param String numberBot : Numéro du bot, entre 1 à 12 et 30 à 32
 	 * @param String idEquipe : Identifiant de l'équipe qui souhaite jouer
 	 */
-	public void newGame(String numberBot, String idEquipe) {
+	public String newGame(String numberBot, String idEquipe) {
 		
-		idEquipePartie = this.apiCaller.newGame(numberBot,idEquipe);;
+		this.idPartie = this.apiCaller.newGame(numberBot,idEquipe);
+		return this.idPartie;
 		
 	}
 	
@@ -65,10 +66,11 @@ public class Game {
 	 * @brief Initialisation d'une partie de type VERSUS
 	 * 		  Donc une partie contre d'autres joueurs
 	 */
-	public void nextGame(String idEquipe) {
+	public String nextGame(String idEquipe) {
 		
 		//Récupération de l'id de la partie
-		idEquipePartie = this.apiCaller.nextGame(idEquipe);
+		this.idPartie = this.apiCaller.nextGame(idEquipe);
+		return this.idPartie;
 	}
 	 
 }
