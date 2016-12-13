@@ -41,7 +41,7 @@ public class EpicHeroesLeague {
 	}
 
 
-	public List<EpicHero> gerEpicHeroes() {
+	public ArrayList<EpicHero> getEpicHeroes() {
 		return this.epicHeroes;
 	}
 
