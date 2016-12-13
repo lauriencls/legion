@@ -259,7 +259,9 @@ public class Game {
 				move = move.substring(0, move.length()-1);
 		    }
 			
-			this.apiCaller.move(this.idPartie, this.idEquipePartie, move);
+			String answer = this.apiCaller.move(this.idPartie, this.idEquipePartie, move);
+			System.out.println("Move sent   : " + move);
+			System.out.println("Move answer : " + answer);
 		}
 	}
 	 
