@@ -96,6 +96,8 @@ public class BattleMain {
 						boolean finished = false;
 						Converter converter = new Converter(name);
 						
+						Board board;
+						
 						while(!finished) {
 							
 						//Je rÃ©cupÃ¨re le statut de la partie
@@ -107,13 +109,14 @@ public class BattleMain {
 							
 							switch(status) {
 							
-								case "CANPLAY" : //On peut jouer
-									Board board = converter.convert(api.getBoard(idPartie));
+								case "CANPLAY" : //On peut jouer									
 									
 									//Le board est récupéré, il faut maintenant élaborer l'équipe et la stratégie
-									game.setBoardPartie(board);
+									game.setBoardPartie(converter.convert(api.getBoard(idPartie)));
 									
-									
+									if(game.getBoardPartie().getNbrTurnLeft()<53){
+										System.out.println(game.getBoardPartie().getOurTeam().getEpicHeroes().get(0).getFighterID());
+									}
 									
 									if (args[2].equals("peacefull")){
 										game.peacefull();
