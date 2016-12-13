@@ -33,7 +33,7 @@ public Board convert(String jsonContent) {
 		JsonObject jsonObject = gson.fromJson(jsonContent, JsonObject.class);
 
 		
-		System.out.println("GetBoard JSON :" + jsonObject.get("playerBoards"));
+		//System.out.println("GetBoard JSON :" + jsonObject.get("playerBoards"));
 		
 		List<EpicHeroesLeague> EpicHeroesLeagues = new Gson().fromJson(jsonObject.get("playerBoards"), listType);
 			

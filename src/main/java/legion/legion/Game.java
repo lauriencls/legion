@@ -99,6 +99,8 @@ public class Game {
 				}
 			}
 		}
+		
+		System.out.println("Initialisation des heroes");
 	}
 	 
 	public void peacefull() {
@@ -113,7 +115,7 @@ public class Game {
 			//On récupère notre team
 			EpicHeroesLeague team = this.boardPartie.getOurTeam();
 			//Les heroes encore en vies
-			ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getEpicHeroes());
+			ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getFighters());
 			
 			//Déclare le mouvement
 			String move = "";
@@ -131,12 +133,8 @@ public class Game {
 			    }
 			
 			String answer = this.apiCaller.move(this.idPartie, this.idEquipePartie, move);
-			System.out.println("Move sent   : " + move);
-			System.out.println("Move answer : " + answer);
-			
+			System.out.println("Move sent   : " + move);		
 		}
-		
-		
 	}
 
 	public void draw() {
@@ -150,12 +148,12 @@ public class Game {
 			//On récupère notre team
 			EpicHeroesLeague team = this.boardPartie.getOurTeam();
 			//Les heroes encore en vies
-			ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getEpicHeroes());
+			ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getFighters());
 			
 			//On récupère la team ennemie 
 			EpicHeroesLeague teamEnnemie = this.boardPartie.getOurTeam();
 			//Les heroes encore en vies
-			ArrayList<EpicHero> ennemieTeamHeroes = this.getAliveHeroes(teamEnnemie.getEpicHeroes());
+			ArrayList<EpicHero> ennemieTeamHeroes = this.getAliveHeroes(teamEnnemie.getFighters());
 			
 			//Déclare le mouvement
 			String move = "";
@@ -219,9 +217,7 @@ public class Game {
 			
 			String answer = this.apiCaller.move(this.idPartie, this.idEquipePartie, move);
 			System.out.println("Move sent   : " + move);
-			System.out.println("Move answer : " + answer);
-		}
-		
+		}	
 	}
 
 	public void strategie() {
@@ -235,7 +231,7 @@ public class Game {
 			//On récupère notre team
 			EpicHeroesLeague team = this.boardPartie.getOurTeam();
 			//Les heroes encore en vies
-			ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getEpicHeroes());
+			ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getFighters());
 			
 			//Déclare le mouvement
 			String move = "";

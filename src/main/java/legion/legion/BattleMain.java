@@ -102,7 +102,7 @@ public class BattleMain {
 							
 						//Je rÃ©cupÃ¨re le statut de la partie
 						status = api.getStatus(idPartie, idEquipe);
-						System.out.println("Statut de la partie : "+status);
+						//System.out.println("Statut de la partie : "+status);
 							
 						
 						//Je mets Ã  jour le Board (voir mÃ©thode en base de Game.java							
@@ -113,10 +113,6 @@ public class BattleMain {
 									
 									//Le board est récupéré, il faut maintenant élaborer l'équipe et la stratégie
 									game.setBoardPartie(converter.convert(api.getBoard(idPartie)));
-									
-									if(game.getBoardPartie().getNbrTurnLeft()<53){
-										System.out.println(game.getBoardPartie().getOurTeam().getEpicHeroes().get(0).getFighterID());
-									}
 									
 									if (args[2].equals("peacefull")){
 										game.peacefull();
@@ -143,24 +139,28 @@ public class BattleMain {
 									
 								case "VICTORY" : // On a gagnÃ© la partie
 									System.out.println("VICTORY");
+									finished = true;
 									break;
 									
 									
 								case "DEFEAT" : //On a perdu la partie
 									System.out.println("DEFEAT");
+									finished = true;
 									break;
 									
 								case "DRAW" : //Match nul
 									System.out.println("DRAW");
+									finished = true;
 									break;
 									
 								case "CANCELLED" : //Abandon
 									finished = true;
 									System.out.println("CANCELLED");
+									finished = true;
 									break;
 								
 							}
-							
+						System.out.println("\n---FIN DE TOUR ---\n");	
 						}
 						
 						

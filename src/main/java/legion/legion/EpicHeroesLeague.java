@@ -8,14 +8,14 @@ import org.json.JSONObject;
 public class EpicHeroesLeague {
 	private String playerID;
 	private String playerName;
-	private ArrayList<EpicHero> epicHeroes;
+	private ArrayList<EpicHero> fighters;
 	
 	
 	public EpicHeroesLeague(String playerID, String playername) {
 		super();
 		this.playerID = playerID;
 		this.playerName = playername;
-		this.epicHeroes = new ArrayList<EpicHero>();
+		this.fighters = new ArrayList<EpicHero>();
 	}
 	
 	public EpicHeroesLeague() {}
@@ -41,13 +41,13 @@ public class EpicHeroesLeague {
 	}
 
 
-	public ArrayList<EpicHero> getEpicHeroes() {
-		return this.epicHeroes;
+	public ArrayList<EpicHero> getFighters() {
+		return this.fighters;
 	}
 
 
 	public void setFighters(ArrayList<EpicHero> epicHeroes) {
-		this.epicHeroes = epicHeroes;
+		this.fighters = epicHeroes;
 	}
 		
 	
