@@ -126,7 +126,7 @@ public class Game {
 			}
 			
 			//On enlève le dernier '$'
-			if (move != null && move.length() > 0 && move.charAt(move.length()-1)=='x') {
+			if (move != null && move.length() > 0) {
 				move = move.substring(0, move.length()-1);
 			    }
 			
@@ -150,16 +150,68 @@ public class Game {
 			//Les heroes encore en vies
 			ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getEpicHeroes());
 			
+			//On récupère la team ennemie 
+			EpicHeroesLeague teamEnnemie = this.boardPartie.getOurTeam();
+			//Les heroes encore en vies
+			ArrayList<EpicHero> ennemieTeamHeroes = this.getAliveHeroes(teamEnnemie.getEpicHeroes());
+			
 			//Déclare le mouvement
 			String move = "";
 			
 			//Pour tous les héroes de notre équipe encore en vie 
 			for (EpicHero epicHero : teamHeroes) {
-				
+				//Le hero est un prêtre
+				if(epicHero.getFighterClass().equals("PRIEST")){
+					
+					//Le pretre à assez de mana pour heal quelqu'un
+					if (epicHero.getCurrentMana()>1){
+						boolean heal = false; //Pour savoir s'il a heal quelqu'un ou non
+						//On vérifie si quelqu'un doit être heal
+						for (EpicHero heroToHeal : teamHeroes) {
+							if(heroToHeal.getCurrentLife() <= heroToHeal.getMaxAvailableLife()-4){
+								//Un allié doit être heal
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "HEAL" + "," + "A" + heroToHeal.getOrderNumberInTeam() + "$";
+								heal = true;
+								break;
+							}
+						}
+						if (!heal){
+							//Personne n'a été heal
+							if (epicHero.getCurrentMana()<epicHero.getMaxAvalaibleMana()){
+								//Le prêtre peut se reposer pour récupérer de la mana
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "REST" + "," + "A" + epicHero.getOrderNumberInTeam() + "$";
+							} else {
+								//Random attack 
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "A" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
+							}
+						}
+					} else {
+						//Le prêtre n'a pas assez de mana -> repos 
+						move += "A" + epicHero.getOrderNumberInTeam() + "," + "REST" + "," + "A" + epicHero.getOrderNumberInTeam() + "$";
+					}
+					
+				} else {
+					//Le hero est un orc ou un garde
+					if(epicHero.getFighterClass().equals("ORC") || epicHero.getFighterClass().equals("GUARD")){
+						boolean priestAttacked = false;
+						for (EpicHero heroToAttack : ennemieTeamHeroes) {
+							//Recherche si l'équipe adverse à un prêtre, et le focus
+							if (heroToAttack.getFighterClass().equals("PRIEST")){
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "A" + heroToAttack.getOrderNumberInTeam() + "$";
+								priestAttacked = true;
+								break;
+							}
+						}
+						if (!priestAttacked){
+							//Random attack
+							move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "A" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
+						}						
+					}
+				}
 			}
 		
 			//On enlève le dernier '$'
-			if (move != null && move.length() > 0 && move.charAt(move.length()-1)=='x') {
+			if (move != null && move.length() > 0) {
 				move = move.substring(0, move.length()-1);
 		    }
 			
@@ -203,7 +255,7 @@ public class Game {
 			}
 		
 			//On enlève le dernier '$'
-			if (move != null && move.length() > 0 && move.charAt(move.length()-1)=='x') {
+			if (move != null && move.length() > 0) {
 				move = move.substring(0, move.length()-1);
 		    }
 			
