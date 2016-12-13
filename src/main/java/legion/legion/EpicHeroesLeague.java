@@ -2,9 +2,6 @@ package legion.legion;
 
 import java.util.*;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 public class EpicHeroesLeague {
 	private String playerID;
 	private String playerName;
@@ -41,7 +38,7 @@ public class EpicHeroesLeague {
 	}
 
 
-	public List<EpicHero> gerEpicHeroes() {
+	public List<EpicHero> getEpicHeroes() {
 		return this.epicHeroes;
 	}
 
@@ -49,6 +46,20 @@ public class EpicHeroesLeague {
 	public void setFighters(ArrayList<EpicHero> epicHeroes) {
 		this.epicHeroes = epicHeroes;
 	}
-		
 	
+	public String getFighterIDPos(int position) {
+		return this.epicHeroes.get(position).getFighterID();
+	}
+		
+	/*
+	public void afficherEpicHeroesLeague() {
+		
+		System.out.println("------ EPIC HEROES LEAGUE ------");
+		System.out.println("PLAYER ID : "+this.playerID);
+		System.out.println("PLAYER NAME : "+this.playerName);
+		
+		for(EpicHero e : epicHeroes) {
+			e.afficherEpicHeroe();
+		}
+	}*/
 }

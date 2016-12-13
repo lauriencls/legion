@@ -62,18 +62,18 @@ public class BattleMain {
 					// - versus si on a un nombre en argument 
 					// - practice si on n'a pas d'argument supplÃ©mentaire
 					
-					
+					String strategie = "";
 					
 					if(args.length > 1) {
 						
 						String numberBot = args[1];
-						
+						strategie = args[2]; //Récupération de la stratégie en argument
 						
 						System.out.println("Lancement d'une nouvelle partie VERSUS");
 						game.newGame(numberBot, idEquipe);
 						
 					} else {
-						
+						strategie = args[1]; //Récupération de la stratégie en argument
 						System.out.println("Lancement d'une nouvelle partie PRACTICE");
 						game.nextGame(idEquipe);
 								
@@ -89,29 +89,29 @@ public class BattleMain {
 						System.out.println("La partie n'a pas pu Ãªtre crÃ©Ã©e"); 
 
 					} else {
-						System.out.println("On a rÃ©cupÃ©rÃ© l'identifiant, la partie peut commencer !");
+						System.out.println("La partie peut commencer !");
 						
 						String status = "";
 						
 						boolean finished = false;
 						Converter converter = new Converter(name);
+						int nbTours = 0; //Pour savoir à quel tour on est rendus
 						
 						while(!finished) {
-							
-						//Je rÃ©cupÃ¨re le statut de la partie
-						status = api.getStatus(idPartie, idEquipe);
-						System.out.println("Statut de la partie : "+status);
-							
 						
-						//Je mets Ã  jour le Board (voir mÃ©thode en base de Game.java							
+							nbTours++;
+							//Récupération du statut de la partie
+							status = api.getStatus(idPartie, idEquipe);
+							System.out.println("Statut de la partie : "+status);	
+							System.out.println("Tour N° "+nbTours);
 							
 							switch(status) {
 							
 								case "CANPLAY" : //On peut jouer
 									Board board = converter.convert(api.getBoard(idPartie));
 									//Le board est récupéré, il faut maintenant élaborer l'équipe et la stratégie
-									
-									
+									String result = game.play(strategie, nbTours);
+									System.out.println("Resultat du coup : "+result);
 									break;
 									
 								case "CANTPLAY" : // On ne peut pas encore jouer
@@ -123,20 +123,23 @@ public class BattleMain {
 									
 								case "VICTORY" : // On a gagnÃ© la partie
 									System.out.println("VICTORY");
+									finished = true;
 									break;
 									
 									
 								case "DEFEAT" : //On a perdu la partie
 									System.out.println("DEFEAT");
+									finished = true;
 									break;
 									
 								case "DRAW" : //Match nul
 									System.out.println("DRAW");
+									finished = true;
 									break;
 									
 								case "CANCELLED" : //Abandon
-									finished = true;
 									System.out.println("CANCELLED");
+									finished = true;
 									break;
 								
 							}

@@ -53,41 +53,22 @@ public class Board {
 		this.nbrTurnsLeft = nbrTurnsLeft;
 	}
 
-
-	public void update(int nbrTurnsLeftParam,JSONArray epicHeroes) {
 		
-		System.out.println("Début de update"); //N'affiche pas ce message donc ne rentre pas dans la méthode
-		System.out.println("nbrtunrns " + nbrTurnsLeftParam);
-		System.out.println("taille de epicHeres : " +epicHeroes.length());			
-		//MAJ du nbrTurnsLeft
+	/**
+	 * @brief Affiche le tableau de bord
+	 */
+	/*
+	public void afficherBoard(){
+		System.out.println("--------------------------");
+		System.out.println("TABLEAU DE BORD");
+		System.out.println("NB TURNS LEFT : "+this.nbrTurnsLeft);
+		System.out.println("----- NOTRE EQUIPE");
+		ourTeam.afficherEpicHeroesLeague();;
+		System.out.println("----- ENNEMI");
+		ennemieTeam.afficherEpicHeroesLeague();;
 		
-		setNbrTurnsLeft(nbrTurnsLeftParam);
+	}*/
 		
-		//Mise à jour du tableau playerBoards
-		for (int i=0; i<epicHeroes.length(); i++) {
-			
-			//Récupération du ième EpicHeroesLeague
-		    JSONObject item = epicHeroes.getJSONObject(i);
-		    
-		    //Récupération de ses paramètres
-		    String playerId = item.getString("playerId");
-		    System.out.println("PlayerID : "+playerId);
-		    String playerName = item.getString("playerName");
-		    System.out.println("playerName : "+playerName);
-		    
-		    
-		    //Récupération de la liste des fighters dans un tableau
-			//EpicHero fighters = item.get("fighters");	
-			
-			//playerBoards[i].update(playerId, playerName, fighters);
-			
-			//System.out.println("Tableau vide");
-			
-			
-		    
-		    
-		}
-		
-	}
+	
 	
 }

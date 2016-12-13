@@ -72,5 +72,44 @@ public class Game {
 		this.idPartie = this.apiCaller.nextGame(idEquipe);
 		return this.idPartie;
 	}
+
+	
+	public String play(String strategie, int nbTours) {
+		String move = "";
+		String action = "";
+		
+		
+		switch (strategie) {
+		case "simple" :
+			
+			switch (nbTours) {
+			case 1 : 
+				move = "GUARD";
+				break;
+			case 2 : 
+				move = "ORC";
+				break;
+			case 3 : 
+				move = "PRIEST";
+				break;
+			default : 
+				if(nbTours%2==0) { //Nombre de tours pair
+					action = "ATTACK";
+				} else {
+					action = "DEFEND";
+				}
+				System.out.println("Récupération de l'ID 1");
+				String noPlayer1Adv = this.boardPartie.getEnnemieTeam().getFighterIDPos(1);
+				System.out.println("MOVE");
+				move = noPlayer1Adv+","+action+",1$2,"+action+",2$3,"+action+",3";
+				
+			}
+			System.out.println("Je suis dans la stratégie simple");
+			break;
+			
+		}
+		
+		return this.apiCaller.play(idPartie, idEquipePartie, move);
+	}
 	 
 }

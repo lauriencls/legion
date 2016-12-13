@@ -23,6 +23,9 @@ public class Converter {
 
 	}
 
+/**
+ * @brief Conversion du tableau de board en String vers du JSON et mise à jour du tableau de bord
+ */
 public Board convert(String jsonContent) {
 
 		Board board = new Board();

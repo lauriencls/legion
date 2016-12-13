@@ -124,36 +124,36 @@ public class EpicHero {
 		this.fighterID = fighterID;
 	}
 
+	
 
-	public void update(String fighterClass, int orderNumberInTeam, boolean isDead, int maxAvailableMana,
-			int maxAvailableLife, int currentMana, int currentLife, String fighterID, JSONArray statesTable) {
+	/*
+	public void afficherEpicHeroe() {
+		
+		System.out.println("------ EPIC HEROE ------");
+		System.out.println("FIGHTER CLASS : "+this.fighterClass);
+		System.out.println("ORDER NUMBER IN TEAM : "+this.orderNumberInTeam);
+		System.out.println("IS DEAD : "+this.isDead);
+		System.out.println("MAX AVAILABLE MANA : "+this.maxAvalaibleMana);
+		System.out.println("MAX AVAILABLE LIFE : "+this.maxAvalaibleLife);
+		System.out.println("CURRENT MANA : "+this.currentMana);
+		System.out.println("CURRENT LIFE : "+this.currentLife);
+		System.out.println("FIGHTER ID : "+this.fighterID);
+		
 
-		//Mise à jour des infos avec des set
-		setFighterClass(fighterClass);
-		setOrderNumberInTeam(orderNumberInTeam);
-		setIsDead(isDead);
-		setMaxAvailableMana(maxAvailableMana);
-		setMaxAvailableLife(maxAvailableLife);
-		setCurrentMana(currentMana);
-		setCurrentLife(currentLife);
-		setFighterID(fighterID);
-		
-		//Parcours du JSONArray
-		
-		for (int i=0; i<statesTable.length(); i++) {
-			
-			//Récupération du ième EpicHero
-		    JSONObject item = statesTable.getJSONObject(i);
-		    
-		    //Récupération de ses paramètres
-		    String type = item.getString("type");
-		    //int remainingDuration = (int)item.get("remainingDuration");
-		    
-		    //states.get(i).update(type,remainingDuration);
-			
+		for(State s : states) {
+			s.afficherState();
 		}
-		
-	}
+
+		this.fighterClass = fighterClass;
+		this.orderNumberInTeam = orderNumberInTeam;
+		this.isDead = isDead;
+		this.maxAvalaibleMana = maxAvalaibleMana;
+		this.maxAvalaibleLife = maxAvalaibleLife;
+		this.currentMana = currentMana;
+		this.currentLife = currentLife;
+		this.states = states;
+		this.fighterID = fighterID;
+	}*/
 
 
 	

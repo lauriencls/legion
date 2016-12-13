@@ -112,4 +112,10 @@ public class ApiCaller {
 		String request = url + "/game/board/"+idPartie+"?format="+format;
 		return(get(request));
 	}
+	
+	public String play(String idPartie,String idEquipe,String move) {
+		String request = url + "/game/play/"+idPartie+"/"+idEquipe+"/"+move;
+		System.out.println("Requête : "+request);
+		return(get(request));
+	}
 }
