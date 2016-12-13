@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -34,11 +36,12 @@ public Board convert(String jsonContent) {
 		JsonObject jsonObject = gson.fromJson(jsonContent, JsonObject.class);
 
 		
-		System.out.println("\n\n\n\nGetBoard JSON :" + jsonObject.get("playerBoards"));
+		System.out.println("GetBoard JSON :" + jsonObject.get("playerBoards"));
 		
 		List<EpicHeroesLeague> EpicHeroesLeagues = new Gson().fromJson(jsonObject.get("playerBoards"), listType);
-
-		System.out.println(EpicHeroesLeagues.size());
+			
+		//System.out.println(EpicHeroesLeagues.size());
+		
 
 		for (EpicHeroesLeague e : EpicHeroesLeagues) {
 			if (e.getPlayerName().equals(this.teamName)) {
@@ -49,8 +52,6 @@ public Board convert(String jsonContent) {
 		}
 
 		board.setNbrTurnsLeft(Integer.parseInt(jsonObject.get("nbrTurnsLeft").toString()));
-
-		System.out.println(board);
 
 		return board;
 

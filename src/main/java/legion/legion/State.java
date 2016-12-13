@@ -39,5 +39,11 @@ public class State {
 		
 	}
 	
+	/*
+	public void afficherState() {
+		System.out.println("Type : "+ this.type);
+		System.out.println("Remaining duration"+this.remainingDuration);
+	}*/
+	
 }
 

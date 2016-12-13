@@ -109,7 +109,24 @@ public class BattleMain {
 							
 								case "CANPLAY" : //On peut jouer
 									Board board = converter.convert(api.getBoard(idPartie));
+									
 									//Le board est récupéré, il faut maintenant élaborer l'équipe et la stratégie
+									game.setBoardPartie(board);
+									
+									
+									
+									if (args[2].equals("peacefull")){
+										game.peacefull();
+									} else {
+										if (args[2].equals("draw")) {
+											game.draw();
+										} else {
+											if (args[2].equals("strategie")) {
+												game.strategie();
+											}
+										}
+									}
+									
 									
 									
 									break;
