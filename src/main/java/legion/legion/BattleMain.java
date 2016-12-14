@@ -46,8 +46,6 @@ public class BattleMain {
 			//CrÃ©ation d'une partie
 			if(args[0].equals("-e")) {
 				
-				System.out.println("Je suis dans le -e");
-				
 				String idPartie = "";
 				
 				//1. On rÃ©cupÃ¨re l'identifiant de l'Ã©quipe
@@ -63,20 +61,23 @@ public class BattleMain {
 					// - versus si on a un nombre en argument 
 					// - practice si on n'a pas d'argument supplÃ©mentaire
 					
-					
+					String strat = "";
 					
 					if(args.length > 1) {
 						
 						String numberBot = args[1];
 						
 						
-						System.out.println("Lancement d'une nouvelle partie VERSUS");
+						System.out.println("Lancement d'une nouvelle partie PRACTICE");
 						game.newGame(numberBot, idEquipe);
+						
+						strat = args[2];
 						
 					} else {
 						
-						System.out.println("Lancement d'une nouvelle partie PRACTICE");
+						System.out.println("Lancement d'une nouvelle partie VERSUS");
 						game.nextGame(idEquipe);
+						strat = args[1];
 								
 					}
 					
@@ -103,7 +104,7 @@ public class BattleMain {
 							
 						//Je rÃ©cupÃ¨re le statut de la partie
 						status = api.getStatus(idPartie, idEquipe);
-						//System.out.println("Statut de la partie : "+status);
+						System.out.println("Statut de la partie : "+status);
 							
 						
 						//Je mets Ã  jour le Board (voir mÃ©thode en base de Game.java							
@@ -117,13 +118,13 @@ public class BattleMain {
 									
 									System.out.println("Coup ennemie : " + api.getLastMove(idPartie, idEquipe));
 									
-									if (args[2].equals("peacefull")){
+									if (strat.equals("peacefull")){
 										game.peacefull();
 									} else {
-										if (args[2].equals("draw")) {
+										if (strat.equals("draw")) {
 											game.draw();
 										} else {
-											if (args[2].equals("strategie")) {
+											if (strat.equals("strategie")) {
 												game.strategie();
 											}
 										}

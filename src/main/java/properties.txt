@@ -1,3 +1,4 @@
-rest.base.url=http://codeandplay.dateepic-ws/epic
-team.name=test
-team.password=test
+rest.base.url=http://evenement.codeandplay.date/epic-ws/epic
+team.name=Legion
+team.password=TjsUnis645
+format=JSON

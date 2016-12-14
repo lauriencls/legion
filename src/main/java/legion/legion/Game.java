@@ -139,7 +139,7 @@ public class Game {
 	}
 
 	public void draw() {
-		//Phase d'initialisation des heroes (LOL limité à un hero par type)
+		//Phase d'initialisation des heroes
 		if (this.boardPartie.getNbrTurnLeft() > 50){
 			//Créer un prêtre, orc, guarde sur les trois premiers tours
 			composeTeam(this.boardPartie.getNbrTurnLeft());
