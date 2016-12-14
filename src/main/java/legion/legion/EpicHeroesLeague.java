@@ -50,5 +50,13 @@ public class EpicHeroesLeague {
 		this.fighters = epicHeroes;
 	}
 		
+	/**
+	 * 
+	 * @return Numéro du personnage ennemi avec le moins de vie
+	 */
+	/*public int getEnnemiMinLife() {
+		
+	for	(EpicHero heroToHeal : teamHeroes)
+	orderNumberInTeam*/
 	
 }

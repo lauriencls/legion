@@ -121,6 +121,7 @@ public class Game {
 			//Les heroes encore en vies
 			ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getFighters());
 			
+		
 			//Déclare le mouvement
 			String move = "";
 			
@@ -360,14 +361,16 @@ public class Game {
 					//Les heroes encore en vies
 					ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getFighters());
 					
+					
 					//On récupère la team ennemie 
-					EpicHeroesLeague teamEnnemie = this.boardPartie.getOurTeam();
+					EpicHeroesLeague teamEnnemie = this.boardPartie.getEnnemieTeam();
 					//Les heroes encore en vies
 					ArrayList<EpicHero> ennemieTeamHeroes = this.getAliveHeroes(teamEnnemie.getFighters());
 					
 					//Déclare le mouvement
 					String move = "";
-					
+					int needHeal = 0;
+					int minlife = 0;
 					//Pour tous les héroes de notre équipe encore en vie 
 					for (EpicHero epicHero : teamHeroes) {
 						//Le hero est un prêtre
@@ -375,8 +378,26 @@ public class Game {
 									
 							//Le pretre à assez de mana pour heal quelqu'un
 							if (boardPartie.getNbrTurnLeft()%5==0){
+								boolean priestAttacked = false;
+								int minlifeEnnemi = 0;
+								int noToAttack=0;
+
+								for (EpicHero heroToAttack : ennemieTeamHeroes) {
+									
+									//Recherche si l'équipe adverse à un prêtre, et le focus
+									if (heroToAttack.getFighterClass().equals("PRIEST")){
+										move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + heroToAttack.getOrderNumberInTeam() + "$";
+										priestAttacked = true;
+										break;
+									} else {
+										if (minlifeEnnemi==0 || heroToAttack.getCurrentLife() < minlifeEnnemi) {
+											minlifeEnnemi = heroToAttack.getCurrentLife();
+											noToAttack = heroToAttack.getOrderNumberInTeam();
+										}
+									}
+								}
 								//Random attack 
-								move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + noToAttack + "$";
 							
 							} else if(boardPartie.getNbrTurnLeft()%5==4 || boardPartie.getNbrTurnLeft()%5==2) {
 							
@@ -387,17 +408,21 @@ public class Game {
 								boolean heal = false; //Pour savoir s'il a heal quelqu'un ou non
 								//On vérifie si quelqu'un doit être heal
 								for (EpicHero heroToHeal : teamHeroes) {
+									if (minlife==0 || heroToHeal.getCurrentLife() < minlife) {
+										minlife = heroToHeal.getCurrentLife();
+										needHeal = heroToHeal.getOrderNumberInTeam();
+										
+									}
 									System.out.println("Type du héros : "+heroToHeal.getFighterClass());
 									System.out.println("Current life du hero"+heroToHeal.getCurrentLife());
 									System.out.println("Max availablelife"+heroToHeal.getMaxAvailableLife());
-									if(heroToHeal.getFighterClass().equals("GUARD")){
 										//Un allié doit être heal
-										move += "A" + epicHero.getOrderNumberInTeam() + "," + "HEAL" + "," + "A" + heroToHeal.getOrderNumberInTeam() + "$";
 										heal = true;
 										System.out.println("Le prêtre fait un heal !");
 										//break;
-									}
 								}
+								
+								
 								if (!heal){
 									//Personne n'a été heal
 									if (epicHero.getCurrentMana()<epicHero.getMaxAvalaibleMana()){
@@ -407,6 +432,9 @@ public class Game {
 										//Random attack 
 										move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
 									}
+								} else {
+									move += "A" + epicHero.getOrderNumberInTeam() + "," + "HEAL" + "," + "A" + needHeal + "$";
+
 								}
 								
 							} else {
@@ -416,6 +444,9 @@ public class Game {
 							
 							
 						} else {
+							int minlifeEnnemi = 0;
+							
+							int noToAttack=0;
 							//Le hero est un orc ou un garde
 							if(epicHero.getFighterClass().equals("ORC") || epicHero.getFighterClass().equals("GUARD")){
 								boolean priestAttacked = false;
@@ -425,12 +456,20 @@ public class Game {
 										move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + heroToAttack.getOrderNumberInTeam() + "$";
 										priestAttacked = true;
 										break;
+									} else {
+										if (minlifeEnnemi==0 || heroToAttack.getCurrentLife() < minlifeEnnemi) {
+											minlifeEnnemi = heroToAttack.getCurrentLife();
+											noToAttack = heroToAttack.getOrderNumberInTeam();
+										}
 									}
 								}
 								if (!priestAttacked){
-									//Random attack
-									move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
-								}						
+									//Il faut attaquer le héro qui a le moins de vies et qui n'est pas mort
+									move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + noToAttack + "$";
+											
+								}
+									
+													
 							}
 						}
 					}

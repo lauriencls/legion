@@ -155,6 +155,8 @@ public class EpicHero {
 		this.states = states;
 		this.fighterID = fighterID;
 	}*/
+	
+	
 
 
 	

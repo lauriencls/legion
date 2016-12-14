@@ -37,6 +37,14 @@ public class Board {
 	public EpicHeroesLeague getEnnemieTeam() {
 		return ennemieTeam;
 	}
+	
+	/*public int getEnnemiMinLife() {
+
+		for(EpicHero heroToHeal : ennemieTeam) {
+			
+		}
+		
+	}*/
 
 
 	public void setEnnemieTeam(EpicHeroesLeague ennemieTeam) {
