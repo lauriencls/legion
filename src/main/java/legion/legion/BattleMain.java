@@ -88,10 +88,10 @@ public class BattleMain {
 					
 					
 					if(idPartie.equals("null")) {
-						System.out.println("La partie n'a pas pu Ãªtre crÃ©Ã©e"); 
+						System.out.println("La partie n'a pas pu être créée ..."); 
 
 					} else {
-						System.out.println("On a rÃ©cupÃ©rÃ© l'identifiant, la partie peut commencer !");
+						System.out.println("On a récupéré l'identifiant, la partie peut commencer !");
 						
 						String status = "";
 						
@@ -126,6 +126,10 @@ public class BattleMain {
 										} else {
 											if (strat.equals("strategie")) {
 												game.strategie();
+											} else {
+												if(strat.equals("strategieLaurie")) {
+													game.strategieLaurie();
+												}
 											}
 										}
 									}

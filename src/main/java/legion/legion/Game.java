@@ -89,16 +89,19 @@ public class Game {
 
 	private void composeTeam(int turnNumber){
 		if (turnNumber == 53){
-			this.apiCaller.move(this.idPartie, this.idEquipePartie, "PRIEST");
-			System.out.println("Move sent   : PRIEST");
+			System.out.println("Il reste 53 tours");
+			this.apiCaller.move(this.idPartie, this.idEquipePartie, "GUARD");
+			System.out.println("Move sent   : GUARD");
 		} else {
 			if (turnNumber == 52){
+				System.out.println("Il reste 52 jours");
 				this.apiCaller.move(this.idPartie, this.idEquipePartie, "ORC");
 				System.out.println("Move sent   : ORC");
 			} else {
 				if (turnNumber == 51){
-					this.apiCaller.move(this.idPartie, this.idEquipePartie, "GUARD");
-					System.out.println("Move sent   : GUARD");
+					System.out.println("Il reste 51 tours");
+					this.apiCaller.move(this.idPartie, this.idEquipePartie, "PRIEST");
+					System.out.println("Move sent   : PRIEST");
 				}
 			}
 		}
@@ -163,7 +166,7 @@ public class Game {
 			for (EpicHero epicHero : teamHeroes) {
 				//Le hero est un prêtre
 				if(epicHero.getFighterClass().equals("PRIEST")){
-					
+							
 					//Le pretre à assez de mana pour heal quelqu'un
 					if (epicHero.getCurrentMana()>1){
 						boolean heal = false; //Pour savoir s'il a heal quelqu'un ou non
@@ -173,7 +176,8 @@ public class Game {
 								//Un allié doit être heal
 								move += "A" + epicHero.getOrderNumberInTeam() + "," + "HEAL" + "," + "A" + heroToHeal.getOrderNumberInTeam() + "$";
 								heal = true;
-								break;
+								System.out.println("Le prête fait un heal !");
+								//break;
 							}
 						}
 						if (!heal){
@@ -190,6 +194,7 @@ public class Game {
 						//Le prêtre n'a pas assez de mana -> repos 
 						move += "A" + epicHero.getOrderNumberInTeam() + "," + "REST" + "," + "A" + epicHero.getOrderNumberInTeam() + "$";
 					}
+					
 					
 				} else {
 					//Le hero est un orc ou un garde
@@ -220,9 +225,10 @@ public class Game {
 			System.out.println("Move sent   : " + move);
 		}	
 	}
-
+	
+	
 	public void strategie() {
-		//Phase d'initialisation des heroes (LOL limité à un hero par type)
+		//Phase d'initialisation des heroes
 		if (this.boardPartie.getNbrTurnLeft() > 50){
 			//Créer un prêtre, orc, guarde sur les trois premiers tours
 			composeTeam(this.boardPartie.getNbrTurnLeft());
@@ -246,12 +252,25 @@ public class Game {
 			for (EpicHero epicHero : teamHeroes) {
 				//STRATEGIE DEFINISSANT LES ACTIONS DE LA TEAM
 				
-				//Deux premiers tours, on attaque le prêtre ennemie
+				//Deux premiers tours, on attaque le prêtre ennemi
 				if (this.boardPartie.getNbrTurnLeft() > 48){
 					for (EpicHero heroToAttack : ennemieTeamHeroes) {
 						//Recherche si l'équipe adverse à un prêtre, et le focus
 						if (heroToAttack.getFighterClass().equals("PRIEST")){
-							move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + heroToAttack.getOrderNumberInTeam() + "$";
+							
+							String attaque = "";
+							
+							if(this.boardPartie.getNbrTurnLeft()%3==0) {
+								attaque = "ATTACK";
+							} else if (this.boardPartie.getNbrTurnLeft()%3==1) {
+								attaque = "HEAL";
+							} else {
+								attaque = "REST";
+							}
+							
+							System.out.println("Attaque pretre"+attaque);
+								
+							move += "A" + epicHero.getOrderNumberInTeam() + "," + attaque + "," + "E" + heroToAttack.getOrderNumberInTeam() + "$";
 							break;
 						}
 					}
@@ -326,6 +345,104 @@ public class Game {
 			this.apiCaller.move(this.idPartie, this.idEquipePartie, move);
 			
 		}
+	}
+	
+	public void strategieLaurie() {
+		//Phase d'initialisation des heroes
+				if (this.boardPartie.getNbrTurnLeft() > 50){
+					//Créer un prêtre, orc, guarde sur les trois premiers tours
+					composeTeam(this.boardPartie.getNbrTurnLeft());
+							
+				//Action durant la partie	
+				} else {
+					//On récupère notre team
+					EpicHeroesLeague team = this.boardPartie.getOurTeam();
+					//Les heroes encore en vies
+					ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getFighters());
+					
+					//On récupère la team ennemie 
+					EpicHeroesLeague teamEnnemie = this.boardPartie.getOurTeam();
+					//Les heroes encore en vies
+					ArrayList<EpicHero> ennemieTeamHeroes = this.getAliveHeroes(teamEnnemie.getFighters());
+					
+					//Déclare le mouvement
+					String move = "";
+					
+					//Pour tous les héroes de notre équipe encore en vie 
+					for (EpicHero epicHero : teamHeroes) {
+						//Le hero est un prêtre
+						if(epicHero.getFighterClass().equals("PRIEST")){
+									
+							//Le pretre à assez de mana pour heal quelqu'un
+							if (boardPartie.getNbrTurnLeft()%5==0){
+								//Random attack 
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
+							
+							} else if(boardPartie.getNbrTurnLeft()%5==4 || boardPartie.getNbrTurnLeft()%5==2) {
+							
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "REST" + "," + "A" + epicHero.getOrderNumberInTeam() + "$";
+							
+							} else if(boardPartie.getNbrTurnLeft()%5==3|| boardPartie.getNbrTurnLeft()%5==1) {
+								System.out.println("Je rentre dans heal");
+								boolean heal = false; //Pour savoir s'il a heal quelqu'un ou non
+								//On vérifie si quelqu'un doit être heal
+								for (EpicHero heroToHeal : teamHeroes) {
+									System.out.println("Type du héros : "+heroToHeal.getFighterClass());
+									System.out.println("Current life du hero"+heroToHeal.getCurrentLife());
+									System.out.println("Max availablelife"+heroToHeal.getMaxAvailableLife());
+									if(heroToHeal.getFighterClass().equals("GUARD")){
+										//Un allié doit être heal
+										move += "A" + epicHero.getOrderNumberInTeam() + "," + "HEAL" + "," + "A" + heroToHeal.getOrderNumberInTeam() + "$";
+										heal = true;
+										System.out.println("Le prêtre fait un heal !");
+										//break;
+									}
+								}
+								if (!heal){
+									//Personne n'a été heal
+									if (epicHero.getCurrentMana()<epicHero.getMaxAvalaibleMana()){
+										//Le prêtre peut se reposer pour récupérer de la mana
+										move += "A" + epicHero.getOrderNumberInTeam() + "," + "REST" + "," + "A" + epicHero.getOrderNumberInTeam() + "$";
+									} else {
+										//Random attack 
+										move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
+									}
+								}
+								
+							} else {
+								//Le prêtre n'a pas assez de mana -> repos 
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "REST" + "," + "A" + epicHero.getOrderNumberInTeam() + "$";
+							}
+							
+							
+						} else {
+							//Le hero est un orc ou un garde
+							if(epicHero.getFighterClass().equals("ORC") || epicHero.getFighterClass().equals("GUARD")){
+								boolean priestAttacked = false;
+								for (EpicHero heroToAttack : ennemieTeamHeroes) {
+									//Recherche si l'équipe adverse à un prêtre, et le focus
+									if (heroToAttack.getFighterClass().equals("PRIEST")){
+										move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + heroToAttack.getOrderNumberInTeam() + "$";
+										priestAttacked = true;
+										break;
+									}
+								}
+								if (!priestAttacked){
+									//Random attack
+									move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
+								}						
+							}
+						}
+					}
+				
+					//On enlève le dernier '$'
+					if (move != null && move.length() > 0) {
+						move = move.substring(0, move.length()-1);
+				    }
+					
+					String answer = this.apiCaller.move(this.idPartie, this.idEquipePartie, move);
+					System.out.println("Move sent   : " + move);
+				}	
 	}
 	 
 }

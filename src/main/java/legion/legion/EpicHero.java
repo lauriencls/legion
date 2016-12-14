@@ -40,6 +40,7 @@ public class EpicHero {
 	}
 
 
+	
 	public void setFighterClass(String fighterClass) {
 		this.fighterClass = fighterClass;
 	}
