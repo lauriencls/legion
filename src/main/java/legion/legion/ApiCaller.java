@@ -118,4 +118,9 @@ public class ApiCaller {
 		return (get(request));
 	}
 	
+	public String getLastMove(String idPartie, String idEquipe){
+		String request = url + "/game/getlastmove/" + idPartie + "/" + idEquipe;
+		return (get(request));
+	}
+	
 }

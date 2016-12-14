@@ -5,7 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Properties; 
+import java.util.Properties;
+import java.util.SimpleTimeZone; 
 
 public class BattleMain {
 
@@ -113,6 +114,8 @@ public class BattleMain {
 									
 									//Le board est récupéré, il faut maintenant élaborer l'équipe et la stratégie
 									game.setBoardPartie(converter.convert(api.getBoard(idPartie)));
+									
+									System.out.println("Coup ennemie : " + api.getLastMove(idPartie, idEquipe));
 									
 									if (args[2].equals("peacefull")){
 										game.peacefull();

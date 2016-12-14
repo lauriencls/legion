@@ -90,17 +90,18 @@ public class Game {
 	private void composeTeam(int turnNumber){
 		if (turnNumber == 53){
 			this.apiCaller.move(this.idPartie, this.idEquipePartie, "PRIEST");
+			System.out.println("Move sent   : PRIEST");
 		} else {
 			if (turnNumber == 52){
 				this.apiCaller.move(this.idPartie, this.idEquipePartie, "ORC");
+				System.out.println("Move sent   : ORC");
 			} else {
 				if (turnNumber == 51){
 					this.apiCaller.move(this.idPartie, this.idEquipePartie, "GUARD");
+					System.out.println("Move sent   : GUARD");
 				}
 			}
 		}
-		
-		System.out.println("Initialisation des heroes");
 	}
 	 
 	public void peacefull() {
@@ -182,7 +183,7 @@ public class Game {
 								move += "A" + epicHero.getOrderNumberInTeam() + "," + "REST" + "," + "A" + epicHero.getOrderNumberInTeam() + "$";
 							} else {
 								//Random attack 
-								move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "A" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
 							}
 						}
 					} else {
@@ -197,14 +198,14 @@ public class Game {
 						for (EpicHero heroToAttack : ennemieTeamHeroes) {
 							//Recherche si l'équipe adverse à un prêtre, et le focus
 							if (heroToAttack.getFighterClass().equals("PRIEST")){
-								move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "A" + heroToAttack.getOrderNumberInTeam() + "$";
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + heroToAttack.getOrderNumberInTeam() + "$";
 								priestAttacked = true;
 								break;
 							}
 						}
 						if (!priestAttacked){
 							//Random attack
-							move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "A" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
+							move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
 						}						
 					}
 				}
@@ -233,6 +234,11 @@ public class Game {
 			//Les heroes encore en vies
 			ArrayList<EpicHero> teamHeroes = this.getAliveHeroes(team.getFighters());
 			
+			//On récupère la team ennemie 
+			EpicHeroesLeague teamEnnemie = this.boardPartie.getOurTeam();
+			//Les heroes encore en vies
+			ArrayList<EpicHero> ennemieTeamHeroes = this.getAliveHeroes(teamEnnemie.getFighters());
+			
 			//Déclare le mouvement
 			String move = "";
 			
@@ -240,18 +246,75 @@ public class Game {
 			for (EpicHero epicHero : teamHeroes) {
 				//STRATEGIE DEFINISSANT LES ACTIONS DE LA TEAM
 				
-				
-				
-				
-				//Stratégie basé sur la paix
-				move += "A" + epicHero.getOrderNumberInTeam() + "," + "REST" + "," + "A" + epicHero.getOrderNumberInTeam() + "$";
-				
-				
-				
-				
-				
-				
-				
+				//Deux premiers tours, on attaque le prêtre ennemie
+				if (this.boardPartie.getNbrTurnLeft() > 48){
+					for (EpicHero heroToAttack : ennemieTeamHeroes) {
+						//Recherche si l'équipe adverse à un prêtre, et le focus
+						if (heroToAttack.getFighterClass().equals("PRIEST")){
+							move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + heroToAttack.getOrderNumberInTeam() + "$";
+							break;
+						}
+					}
+				} else {
+					//Tous les 5 tours
+					if (this.boardPartie.getNbrTurnLeft()%5 == 0){
+						System.out.println("5 tours");
+						boolean first = true;
+						EpicHero memberFocused = null;
+						for (EpicHero heroFocus : teamHeroes) {
+							if (first){
+								memberFocused = heroFocus;
+								first = false;
+							} else {
+								if (heroFocus.getCurrentLife() < memberFocused.getCurrentLife()){
+									memberFocused = heroFocus;
+								}
+							}
+						}
+						//Prêtre heal, guarde protège le focused, orc taunt le prêtre de préférence sinon peu importe
+						if (epicHero.getFighterClass().equals("PRIEST")){
+							move += "A" + epicHero.getOrderNumberInTeam() + "," + "HEAL" + "," + "A" + memberFocused.getOrderNumberInTeam() + "$";
+						} else {
+							if (epicHero.getFighterClass().equals("GUARD")){
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "PROTECT" + "," + "A" + memberFocused.getOrderNumberInTeam() + "$";
+							} else {
+								boolean priestFound = false;
+								for (EpicHero heroToAttack : ennemieTeamHeroes) {
+									//Recherche si l'équipe adverse à un prêtre, et le focus
+									if (heroToAttack.getFighterClass().equals("PRIEST")){
+										move += "A" + epicHero.getOrderNumberInTeam() + "," + "YELL" + "," + "E" + heroToAttack.getOrderNumberInTeam() + "$";
+										priestFound = true;
+										break;
+									}
+								}
+								if (!priestFound){
+									move += "A" + epicHero.getOrderNumberInTeam() + "," + "YELL" + "," + "E" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
+								}
+							}
+						}
+					} else {
+						//Tous les 3 tours?
+						if (this.boardPartie.getNbrTurnLeft()%3 == 1){
+							System.out.println("3 tours");
+							move += "A" + epicHero.getOrderNumberInTeam() + "," + "REST" + "," + "A" + epicHero.getOrderNumberInTeam() + "$";
+						} else {
+							//Autres tours 
+							System.out.println("autres");
+							boolean priestFound = false;
+							for (EpicHero heroToAttack : ennemieTeamHeroes) {
+								//Recherche si l'équipe adverse à un prêtre, et le focus
+								if (heroToAttack.getFighterClass().equals("PRIEST")){
+									move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + heroToAttack.getOrderNumberInTeam() + "$";
+									priestFound = true;
+									break;
+								}
+							}
+							if (!priestFound){
+								move += "A" + epicHero.getOrderNumberInTeam() + "," + "ATTACK" + "," + "E" + ennemieTeamHeroes.get(0).getOrderNumberInTeam() + "$";
+							}
+						}
+					}
+				}
 			}
 		
 			//On enlève le dernier '$'
@@ -259,9 +322,9 @@ public class Game {
 				move = move.substring(0, move.length()-1);
 		    }
 			
-			String answer = this.apiCaller.move(this.idPartie, this.idEquipePartie, move);
 			System.out.println("Move sent   : " + move);
-			System.out.println("Move answer : " + answer);
+			this.apiCaller.move(this.idPartie, this.idEquipePartie, move);
+			
 		}
 	}
 	 
